@@ -1,8 +1,8 @@
 #
 # Conditional build:
 %bcond_with	chipcard	# build aqgeldkarte backend
-%bcond_with	gtk		# build g2banking frontend
-%bcond_with	kde		# build kbanking frontend
+%bcond_with	gtk		# build g2banking frontend (needs $DISPLAY)
+%bcond_without	kde		# don't build kbanking frontend
 #
 Summary:	A library for online banking functions and financial data import/export
 Summary(pl):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
@@ -635,7 +635,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files frontend-kbanking-static
 %defattr(644,root,root,755)
-%{_libdir}/libgkanking.a
+%{_libdir}/libkbanking.a
 %endif
 
 %files frontend-qbanking
