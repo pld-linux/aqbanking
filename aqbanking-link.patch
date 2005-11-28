@@ -31,7 +31,7 @@
   dialogs/libdialogs.la \
   views/libviews.la \
 - -L../qbanking -lqbanking \
-+ ../qbanking/libqbanking/la \
++ ../qbanking/libqbanking.la \
   $(aqbanking_internal_libs) \
   $(kde3_libs) -lkdeui -lkdecore -lkio $(gwenhywfar_libs)
  
