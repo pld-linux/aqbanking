@@ -1,8 +1,8 @@
 #
 # Conditional build:
-%bcond_with	chipcard	# build aqgeldkarte backend
-%bcond_with	gtk		# build g2banking frontend (needs $DISPLAY)
-%bcond_without	kde		# don't build kbanking frontend
+%bcond_with	chipcard	# aqgeldkarte backend
+%bcond_without	gtk		# g2banking frontend
+%bcond_without	kde		# kbanking frontend
 #
 Summary:	A library for online banking functions and financial data import/export
 Summary(pl):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
@@ -14,11 +14,11 @@ Group:		Libraries
 Source0:	http://dl.sourceforge.net/aqbanking/%{name}-%{version}.tar.gz
 # Source0-md5:	cb8337cf12072a304217379b7ea23df2
 Patch0:		%{name}-link.patch
+Patch1:		%{name}-glade.patch
 URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake
 BuildRequires:	gettext-devel
-%{?with_gtk:BuildRequires:	glade2 >= 2.0}
 BuildRequires:	gwenhywfar-devel >= 1.18.0
 %{?with_gtk:BuildRequires:	gtk+2-devel >= 2.0.0}
 %{?with_kde:BuildRequires:	kdelibs-devel >= 3.0}
@@ -397,6 +397,7 @@ Wi±zanie Pythona do biblioteki AqBanking.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
