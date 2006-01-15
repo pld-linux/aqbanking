@@ -15,6 +15,7 @@ Source0:	http://dl.sourceforge.net/aqbanking/%{name}-%{version}.tar.gz
 # Source0-md5:	cb8337cf12072a304217379b7ea23df2
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-glade.patch
+Patch2:		%{name}-libsuffix.patch
 URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake
@@ -398,6 +399,7 @@ Wi±zanie Pythona do biblioteki AqBanking.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__libtoolize}
