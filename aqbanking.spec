@@ -459,7 +459,6 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc ChangeLog ChangeLog README TODO
-%attr(755,root,root) %{_bindir}/aqbanking-tool
 %attr(755,root,root) %{_libdir}/libaqbanking.so.*.*.*
 %attr(755,root,root) %{_libdir}/libaqbankingpp.so.*.*.*
 %dir %{_libdir}/aqbanking
@@ -591,6 +590,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files frontend-cbanking
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/aqbanking-tool
 %attr(755,root,root) %{_libdir}/libcbanking.so.*.*.*
 
 %files frontend-cbanking-devel
