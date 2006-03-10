@@ -1,30 +1,29 @@
 #
 # Conditional build:
-%bcond_with	chipcard	# aqgeldkarte backend
+%bcond_without	chipcard	# aqgeldkarte backend
 %bcond_without	gtk		# g2banking frontend
 %bcond_without	kde		# kbanking frontend
 #
 Summary:	A library for online banking functions and financial data import/export
 Summary(pl):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
 Name:		aqbanking
-Version:	1.6.2
-Release:	2
+Version:	1.9.8beta
+Release:	0.1
 License:	GPL v2
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/aqbanking/%{name}-%{version}.tar.gz
-# Source0-md5:	cb8337cf12072a304217379b7ea23df2
+# Source0-md5:	7814c00aea29883ba40f64f6ecdfb1b8
 Patch0:		%{name}-link.patch
-Patch1:		%{name}-glade.patch
-Patch2:		%{name}-libsuffix.patch
 URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake
 BuildRequires:	gettext-devel
-BuildRequires:	gwenhywfar-devel >= 1.18.0
+BuildRequires:	gwenhywfar-devel >= 1.99.7.3
 %{?with_gtk:BuildRequires:	gtk+2-devel >= 2.0.0}
 %{?with_kde:BuildRequires:	kdelibs-devel >= 3.0}
 BuildRequires:	ktoblzcheck-devel
-%{?with_chipcard:BuildRequires:	libchipcard2-devel >= 1.9.15}
+%{?with_chipcard:BuildRequires:	libchipcard2-devel >= 1.9.20}
+%{?with_gtk:BuildRequires:	libglade2-devel >= 2.0.0}
 BuildRequires:	libofx-devel >= 0.8.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
@@ -59,9 +58,7 @@ Summary:	Header files for AqBanking library
 Summary(pl):	Pliki nag³ówkowe biblioteki AqBanking
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	gwenhywfar-devel >= 1.18.0
-# for libaqbankingpp only
-#Requires:	libstdc++-devel
+Requires:	gwenhywfar-devel >= 1.99.7.3
 
 %description devel
 Header files for AqBanking library.
@@ -136,7 +133,7 @@ Summary(pl):	Pliki nag³ówkowe biblioteki backendu AqGeldKarte
 Group:		Development/Libraries
 Requires:	%{name}-backend-aqgeldkarte = %{version}-%{release}
 Requires:	%{name}-devel = %{version}-%{release}
-Requires:	libchipcard2-devel >= 1.9.15
+Requires:	libchipcard2-devel >= 1.9.20
 
 %description backend-aqgeldkarte-devel
 Header files for AqGeldKarte backend library.
@@ -286,6 +283,7 @@ Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-frontend-g2banking = %{version}-%{release}
 Requires:	gtk+2-devel >= 2.0.0
+Requires:	libglade2-devel >= 2.0.0
 
 %description frontend-g2banking-devel
 Header files for G2Banking frontend library.
@@ -397,9 +395,7 @@ Wi±zanie Pythona do biblioteki AqBanking.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+#%patch0 -p1
 
 %build
 %{__libtoolize}
@@ -415,7 +411,9 @@ Wi±zanie Pythona do biblioteki AqBanking.
 	--with-backends="aqhbci aqdtaus%{?with_chipcard: aqgeldkarte} aqofxconnect" \
 	--with-frontends="cbanking%{?with_gtk: g2banking} qbanking%{?with_kde: kbanking}"
 
-%{__make}
+# SHELL because of mksymlinks script
+%{__make} \
+	SHELL=/bin/bash
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -423,7 +421,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/*/plugins/*/*/*.{la,a}
+rm -f $RPM_BUILD_ROOT%{_libdir}/*/plugins/*/*{,/*/*}/*.{la,a}
 rm -f $RPM_BUILD_ROOT%{py_sitescriptdir}/aqbanking/*.py
 
 %find_lang %{name}
@@ -462,7 +460,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog ChangeLog README TODO
 %attr(755,root,root) %{_libdir}/libaqbanking.so.*.*.*
-%attr(755,root,root) %{_libdir}/libaqbankingpp.so.*.*.*
+%attr(755,root,root) %{_libdir}/libaqnone.so.*.*.*
 %dir %{_libdir}/aqbanking
 %dir %{_libdir}/aqbanking/plugins
 %dir %{_libdir}/aqbanking/plugins/*
@@ -470,10 +468,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/bankinfo/*.so*
 %{_libdir}/aqbanking/plugins/*/bankinfo/*.xml
 %dir %{_libdir}/aqbanking/plugins/*/debugger
+%dir %{_libdir}/aqbanking/plugins/*/frontends
 %dir %{_libdir}/aqbanking/plugins/*/imexporters
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/imexporters/*.so*
 %{_libdir}/aqbanking/plugins/*/imexporters/*.xml
 %dir %{_libdir}/aqbanking/plugins/*/providers
+%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqnone.so*
+%{_libdir}/aqbanking/plugins/*/providers/aqnone.xml
 %dir %{_libdir}/aqbanking/plugins/*/wizards
 %attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/dbio/*.so*
 %{_libdir}/gwenhywfar/plugins/*/dbio/*.xml
@@ -483,27 +484,24 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/aqbanking-config
 %attr(755,root,root) %{_libdir}/libaqbanking.so
-%attr(755,root,root) %{_libdir}/libaqbankingpp.so
+%attr(755,root,root) %{_libdir}/libaqnone.so
 %{_libdir}/libaqbanking.la
-%{_libdir}/libaqbankingpp.la
+%{_libdir}/libaqnone.la
 %{_includedir}/aqbanking
-%{_includedir}/aqbanking++
 %{_aclocaldir}/aqbanking.m4
 %{_pkgconfigdir}/aqbanking.pc
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libaqbanking.a
-%{_libdir}/libaqbankingpp.a
+%{_libdir}/libaqnone.a
 
 %files backend-aqdtaus
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaqdtaus.so.*.*.*
+%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules/aqdtaus.so*
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqdtaus.so*
 %{_libdir}/aqbanking/plugins/*/providers/aqdtaus.xml
-%dir %{_libdir}/aqbanking/plugins/*/wizards/aqdtaus
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/wizards/aqdtaus/aqdtaus-qt3-wizard
-%{_libdir}/aqbanking/plugins/*/wizards/aqdtaus/qt_wizard.xml
 
 %files backend-aqdtaus-devel
 %defattr(644,root,root,755)
@@ -521,11 +519,9 @@ rm -rf $RPM_BUILD_ROOT
 %files backend-aqgeldkarte
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaqgeldkarte.so.*.*.*
+%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules/aqgeldkarte.so*
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqgeldkarte.so*
 %{_libdir}/aqbanking/plugins/*/providers/aqgeldkarte.xml
-%dir %{_libdir}/aqbanking/plugins/*/wizards/aqgeldkarte
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/wizards/aqgeldkarte/aqgeldkarte-qt3-wizard
-%{_libdir}/aqbanking/plugins/*/wizards/aqgeldkarte/qt_wizard.xml
 
 %files backend-aqgeldkarte-devel
 %defattr(644,root,root,755)
@@ -548,11 +544,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/aqbanking/plugins/*/debugger/aqhbci
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/debugger/aqhbci/aqhbci-qt3-debug
 %{_libdir}/aqbanking/plugins/*/debugger/aqhbci/qt_debug.xml
+%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules/aqhbci.so*
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqhbci.so*
 %{_libdir}/aqbanking/plugins/*/providers/aqhbci.xml
-%dir %{_libdir}/aqbanking/plugins/*/wizards/aqhbci
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/wizards/aqhbci/aqhbci-qt3-wizard
-%{_libdir}/aqbanking/plugins/*/wizards/aqhbci/kde_wizard.xml
 %attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/crypttoken/pintan.so
 %{_libdir}/gwenhywfar/plugins/*/crypttoken/pintan.xml
 %{_datadir}/aqhbci
@@ -572,11 +566,9 @@ rm -rf $RPM_BUILD_ROOT
 %files backend-aqofxconnect
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaqofxconnect.so.*.*.*
+%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules/aqofxconnect.so*
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqofxconnect.so*
 %{_libdir}/aqbanking/plugins/*/providers/aqofxconnect.xml
-%dir %{_libdir}/aqbanking/plugins/*/wizards/aqofxconnect
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/wizards/aqofxconnect/aqofxconnect-qt3-wizard
-%{_libdir}/aqbanking/plugins/*/wizards/aqofxconnect/qt_wizard.xml
 
 %files backend-aqofxconnect-devel
 %defattr(644,root,root,755)
@@ -597,9 +589,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files frontend-cbanking-devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/cbanking-config
 %attr(755,root,root) %{_libdir}/libcbanking.so
 %{_libdir}/libcbanking.la
 %{_includedir}/cbanking
+%{_aclocaldir}/cbanking.m4
 
 %files frontend-cbanking-static
 %defattr(644,root,root,755)
@@ -643,7 +637,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files frontend-qbanking
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/qb-help
 %attr(755,root,root) %{_libdir}/libqbanking.so.*.*.*
+%dir %{_libdir}/aqbanking/plugins/*/frontends/qbanking
+%dir %{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules
+%dir %{_libdir}/aqbanking/plugins/*/wizards
+%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/wizards/qt3-wizard
+%{_libdir}/aqbanking/plugins/*/wizards/qt3_wizard.xml
 
 %files frontend-qbanking-devel
 %defattr(644,root,root,755)
