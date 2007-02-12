@@ -5,7 +5,7 @@
 %bcond_without	kde		# kbanking frontend
 #
 Summary:	A library for online banking functions and financial data import/export
-Summary(pl):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
+Summary(pl.UTF-8):   Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
 Name:		aqbanking
 Version:	1.9.8beta
 Release:	0.1
@@ -43,19 +43,19 @@ to simplify import and export of financial data. Currently there are
 import plugins for the following formats: DTAUS (German financial
 format), SWIFT (MT940 and MT942).
 
-%description -l pl
-Celem projektu AqBanking jest dostarczenie warstwy po¶redniej miêdzy
-programem a ró¿nymi bibliotekami us³ug bankowych online (np. AqHBCI).
-Pierwszy ju¿ obs³ugiwany backend to AqHBCI - biblioteka implementuj±ca
-klienta niemieckiego protoko³u HBCI (Home Baking Computer Interface).
-Ponadto Aqbanking dostarcza ró¿ne wtyczki upraszczaj±ce importowanie i
-eksportowanie danych finansowych. Aktualnie istniej± wtyczki do
-importu nastêpuj±cych formatów: DTAUS (niemiecki format finansowy),
+%description -l pl.UTF-8
+Celem projektu AqBanking jest dostarczenie warstwy poÅ›redniej miÄ™dzy
+programem a rÃ³Å¼nymi bibliotekami usÅ‚ug bankowych online (np. AqHBCI).
+Pierwszy juÅ¼ obsÅ‚ugiwany backend to AqHBCI - biblioteka implementujÄ…ca
+klienta niemieckiego protokoÅ‚u HBCI (Home Baking Computer Interface).
+Ponadto Aqbanking dostarcza rÃ³Å¼ne wtyczki upraszczajÄ…ce importowanie i
+eksportowanie danych finansowych. Aktualnie istniejÄ… wtyczki do
+importu nastÄ™pujÄ…cych formatÃ³w: DTAUS (niemiecki format finansowy),
 SWIFT (MT940 oraz MT942).
 
 %package devel
 Summary:	Header files for AqBanking library
-Summary(pl):	Pliki nag³ówkowe biblioteki AqBanking
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki AqBanking
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	gwenhywfar-devel >= 1.99.7.3
@@ -63,36 +63,36 @@ Requires:	gwenhywfar-devel >= 1.99.7.3
 %description devel
 Header files for AqBanking library.
 
-%description devel -l pl
-Pliki nag³ówkowe biblioteki AqBanking.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki AqBanking.
 
 %package static
 Summary:	Static AqBanking libraries
-Summary(pl):	Statyczne biblioteki AqBanking
+Summary(pl.UTF-8):   Statyczne biblioteki AqBanking
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static AqBanking libraries.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczne biblioteki AqBanking.
 
 %package backend-aqdtaus
 Summary:	AqDTAUS backend for AqBanking library
-Summary(pl):	Backend AqDTAUS dla biblioteki AqBanking
+Summary(pl.UTF-8):   Backend AqDTAUS dla biblioteki AqBanking
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description backend-aqdtaus
 AqDTAUS backend for AqBanking library.
 
-%description backend-aqdtaus -l pl
+%description backend-aqdtaus -l pl.UTF-8
 Backend AqDTAUS dla biblioteki AqBanking.
 
 %package backend-aqdtaus-devel
 Summary:	Header files for AqDTAUS backend library
-Summary(pl):	Pliki nag³ówkowe biblioteki backendu AqDTAUS
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki backendu AqDTAUS
 Group:		Development/Libraries
 Requires:	%{name}-backend-aqdtaus = %{version}-%{release}
 Requires:	%{name}-devel = %{version}-%{release}
@@ -100,36 +100,36 @@ Requires:	%{name}-devel = %{version}-%{release}
 %description backend-aqdtaus-devel
 Header files for AqDTAUS backend library.
 
-%description backend-aqdtaus-devel -l pl
-Pliki nag³ówkowe biblioteki backendu AqDTAUS.
+%description backend-aqdtaus-devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki backendu AqDTAUS.
 
 %package backend-aqdtaus-static
 Summary:	Static AqDTAUS backend library
-Summary(pl):	Statyczna biblioteka backendu AqDTAUS
+Summary(pl.UTF-8):   Statyczna biblioteka backendu AqDTAUS
 Group:		Development/Libraries
 Requires:	%{name}-backend-aqdtaus-devel = %{version}-%{release}
 
 %description backend-aqdtaus-static
 Static AqDTAUS backend library.
 
-%description backend-aqdtaus-static -l pl
+%description backend-aqdtaus-static -l pl.UTF-8
 Statyczna biblioteka backendu AqDTAUS.
 
 %package backend-aqgeldkarte
 Summary:	AqGeldKarte backend for AqBanking library
-Summary(pl):	Backend AqGeldKarte dla biblioteki AqBanking
+Summary(pl.UTF-8):   Backend AqGeldKarte dla biblioteki AqBanking
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description backend-aqgeldkarte
 AqGeldKarte backend for AqBanking library.
 
-%description backend-aqgeldkarte -l pl
+%description backend-aqgeldkarte -l pl.UTF-8
 Backend AqGeldKarte dla biblioteki AqBanking.
 
 %package backend-aqgeldkarte-devel
 Summary:	Header files for AqGeldKarte backend library
-Summary(pl):	Pliki nag³ówkowe biblioteki backendu AqGeldKarte
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki backendu AqGeldKarte
 Group:		Development/Libraries
 Requires:	%{name}-backend-aqgeldkarte = %{version}-%{release}
 Requires:	%{name}-devel = %{version}-%{release}
@@ -138,36 +138,36 @@ Requires:	libchipcard2-devel >= 1.9.20
 %description backend-aqgeldkarte-devel
 Header files for AqGeldKarte backend library.
 
-%description backend-aqgeldkarte-devel -l pl
-Pliki nag³ówkowe biblioteki backendu AqGeldKarte.
+%description backend-aqgeldkarte-devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki backendu AqGeldKarte.
 
 %package backend-aqgeldkarte-static
 Summary:	Static AqGeldKarte backend library
-Summary(pl):	Statyczna biblioteka backendu AqGeldKarte
+Summary(pl.UTF-8):   Statyczna biblioteka backendu AqGeldKarte
 Group:		Development/Libraries
 Requires:	%{name}-backend-aqgeldkarte-devel = %{version}-%{release}
 
 %description backend-aqgeldkarte-static
 Static AqGeldKarte backend library.
 
-%description backend-aqgeldkarte-static -l pl
+%description backend-aqgeldkarte-static -l pl.UTF-8
 Statyczna biblioteka backendu AqGeldKarte.
 
 %package backend-aqhbci
 Summary:	AqHBCI backend for AqBanking library
-Summary(pl):	Backend AqHBCI dla biblioteki AqBanking
+Summary(pl.UTF-8):   Backend AqHBCI dla biblioteki AqBanking
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description backend-aqhbci
 AqHBCI backend for AqBanking library.
 
-%description backend-aqhbci -l pl
+%description backend-aqhbci -l pl.UTF-8
 Backend AqHBCI dla biblioteki AqBanking.
 
 %package backend-aqhbci-devel
 Summary:	Header files for AqHBCI backend library
-Summary(pl):	Pliki nag³ówkowe biblioteki backendu AqHBCI
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki backendu AqHBCI
 Group:		Development/Libraries
 Requires:	%{name}-backend-aqhbci = %{version}-%{release}
 Requires:	%{name}-devel = %{version}-%{release}
@@ -175,36 +175,36 @@ Requires:	%{name}-devel = %{version}-%{release}
 %description backend-aqhbci-devel
 Header files for AqHBCI backend library.
 
-%description backend-aqhbci-devel -l pl
-Pliki nag³ówkowe biblioteki backendu AqHBCI.
+%description backend-aqhbci-devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki backendu AqHBCI.
 
 %package backend-aqhbci-static
 Summary:	Static AqHBCI backend library
-Summary(pl):	Statyczna biblioteka backendu AqHBCI
+Summary(pl.UTF-8):   Statyczna biblioteka backendu AqHBCI
 Group:		Development/Libraries
 Requires:	%{name}-backend-aqhbci-devel = %{version}-%{release}
 
 %description backend-aqhbci-static
 Static AqHBCI backend library.
 
-%description backend-aqhbci-static -l pl
+%description backend-aqhbci-static -l pl.UTF-8
 Statyczna biblioteka backendu AqHBCI.
 
 %package backend-aqofxconnect
 Summary:	AqOFXConnect backend for AqBanking library
-Summary(pl):	Backend AqOFXConnect dla biblioteki AqBanking
+Summary(pl.UTF-8):   Backend AqOFXConnect dla biblioteki AqBanking
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description backend-aqofxconnect
 AqOFXConnect backend for AqBanking library.
 
-%description backend-aqofxconnect -l pl
+%description backend-aqofxconnect -l pl.UTF-8
 Backend AqOFXConnect dla biblioteki AqBanking.
 
 %package backend-aqofxconnect-devel
 Summary:	Header files for AqOFXConnect backend library
-Summary(pl):	Pliki nag³ówkowe biblioteki backendu AqOFXConnect
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki backendu AqOFXConnect
 Group:		Development/Libraries
 Requires:	%{name}-backend-aqofxconnect = %{version}-%{release}
 Requires:	libofx-devel >= 0.8.0
@@ -212,36 +212,36 @@ Requires:	libofx-devel >= 0.8.0
 %description backend-aqofxconnect-devel
 Header files for AqOFXConnect backend library.
 
-%description backend-aqofxconnect-devel -l pl
-Pliki nag³ówkowe biblioteki backendu AqOFXConnect.
+%description backend-aqofxconnect-devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki backendu AqOFXConnect.
 
 %package backend-aqofxconnect-static
 Summary:	Static AqOFXConnect backend library
-Summary(pl):	Statyczna biblioteka backendu AqOFXConnect
+Summary(pl.UTF-8):   Statyczna biblioteka backendu AqOFXConnect
 Group:		Development/Libraries
 Requires:	%{name}-backend-aqofxconnect-devel = %{version}-%{release}
 
 %description backend-aqofxconnect-static
 Static AqOFXConnect backend library.
 
-%description backend-aqofxconnect-static -l pl
+%description backend-aqofxconnect-static -l pl.UTF-8
 Statyczna biblioteka backendu AqOFXConnect.
 
 %package frontend-cbanking
 Summary:	Cbanking frontend for AqBanking library
-Summary(pl):	Frontend Cbanking dla biblioteki AqBanking
+Summary(pl.UTF-8):   Frontend Cbanking dla biblioteki AqBanking
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description frontend-cbanking
 Cbanking frontend for AqBanking library.
 
-%description frontend-cbanking -l pl
+%description frontend-cbanking -l pl.UTF-8
 Frontend Cbanking dla biblioteki AqBanking.
 
 %package frontend-cbanking-devel
 Summary:	Header files for Cbanking frontend library
-Summary(pl):	Pliki nag³ówkowe biblioteki frontendu Cbanking
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki frontendu Cbanking
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-frontend-cbanking = %{version}-%{release}
@@ -249,36 +249,36 @@ Requires:	%{name}-frontend-cbanking = %{version}-%{release}
 %description frontend-cbanking-devel
 Header files for Cbanking frontend library.
 
-%description frontend-cbanking-devel -l pl
-Pliki nag³ówkowe biblioteki frontendu Cbanking.
+%description frontend-cbanking-devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki frontendu Cbanking.
 
 %package frontend-cbanking-static
 Summary:	Static Cbanking frontend library
-Summary(pl):	Statyczna biblioteka frontendu Cbanking
+Summary(pl.UTF-8):   Statyczna biblioteka frontendu Cbanking
 Group:		Development/Libraries
 Requires:	%{name}-frontend-cbanking-devel = %{version}-%{release}
 
 %description frontend-cbanking-static
 Static Cbanking frontend library.
 
-%description frontend-cbanking-static -l pl
+%description frontend-cbanking-static -l pl.UTF-8
 Statyczna biblioteka frontendu Cbanking.
 
 %package frontend-g2banking
 Summary:	G2Banking - GTK+ based frontend for AqBanking library
-Summary(pl):	G2Bbanking - oparty na GTK+ frontend dla biblioteki AqBanking
+Summary(pl.UTF-8):   G2Bbanking - oparty na GTK+ frontend dla biblioteki AqBanking
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description frontend-g2banking
 G2Banking - GTK+ based frontend for AqBanking library.
 
-%description frontend-g2banking -l pl
+%description frontend-g2banking -l pl.UTF-8
 G2Bbanking - oparty na GTK+ frontend dla biblioteki AqBanking.
 
 %package frontend-g2banking-devel
 Summary:	Header files for G2Banking frontend library
-Summary(pl):	Pliki nag³ówkowe biblioteki frontendu G2Banking
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki frontendu G2Banking
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-frontend-g2banking = %{version}-%{release}
@@ -288,36 +288,36 @@ Requires:	libglade2-devel >= 2.0.0
 %description frontend-g2banking-devel
 Header files for G2Banking frontend library.
 
-%description frontend-g2banking-devel -l pl
-Pliki nag³ówkowe biblioteki frontendu G2Banking.
+%description frontend-g2banking-devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki frontendu G2Banking.
 
 %package frontend-g2banking-static
 Summary:	Static G2Banking frontend library
-Summary(pl):	Statyczna biblioteka frontendu G2Banking
+Summary(pl.UTF-8):   Statyczna biblioteka frontendu G2Banking
 Group:		Development/Libraries
 Requires:	%{name}-frontend-g2banking-devel = %{version}-%{release}
 
 %description frontend-g2banking-static
 Static G2Banking frontend library.
 
-%description frontend-g2banking-static -l pl
+%description frontend-g2banking-static -l pl.UTF-8
 Statyczna biblioteka frontendu G2Banking.
 
 %package frontend-kbanking
 Summary:	KBanking - KDE-based frontend for AqBanking library
-Summary(pl):	KBanking - oparty na KDE frontend dla biblioteki AqBanking
+Summary(pl.UTF-8):   KBanking - oparty na KDE frontend dla biblioteki AqBanking
 Group:		Libraries
 Requires:	%{name}-frontend-qbanking = %{version}-%{release}
 
 %description frontend-kbanking
 KBanking - KDE-based frontend for AqBanking library.
 
-%description frontend-kbanking -l pl
+%description frontend-kbanking -l pl.UTF-8
 KBanking - oparty na KDE frontend dla biblioteki AqBanking.
 
 %package frontend-kbanking-devel
 Summary:	Header files for KBanking frontend library
-Summary(pl):	Pliki nag³ówkowe biblioteki frontendu KBanking
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki frontendu KBanking
 Group:		Development/Libraries
 Requires:	%{name}-frontend-kbanking = %{version}-%{release}
 Requires:	%{name}-frontend-qbanking-devel = %{version}-%{release}
@@ -326,36 +326,36 @@ Requires:	kdelibs-devel >= 3.0
 %description frontend-kbanking-devel
 Header files for KBanking frontend library.
 
-%description frontend-kbanking-devel -l pl
-Pliki nag³ówkowe biblioteki frontendu KBanking.
+%description frontend-kbanking-devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki frontendu KBanking.
 
 %package frontend-kbanking-static
 Summary:	Static KBanking frontend library
-Summary(pl):	Statyczna biblioteka frontendu KBanking
+Summary(pl.UTF-8):   Statyczna biblioteka frontendu KBanking
 Group:		Development/Libraries
 Requires:	%{name}-frontend-kbanking-devel = %{version}-%{release}
 
 %description frontend-kbanking-static
 Static KBanking frontend library.
 
-%description frontend-kbanking-static -l pl
+%description frontend-kbanking-static -l pl.UTF-8
 Statyczna biblioteka frontendu KBanking.
 
 %package frontend-qbanking
 Summary:	QBanking - Qt-based frontend for AqBanking library
-Summary(pl):	QBanking - oparty na Qt frontend dla biblioteki AqBanking
+Summary(pl.UTF-8):   QBanking - oparty na Qt frontend dla biblioteki AqBanking
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description frontend-qbanking
 QBanking - Qt-based frontend for AqBanking library.
 
-%description frontend-qbanking -l pl
+%description frontend-qbanking -l pl.UTF-8
 QBanking - oparty na Qt frontend dla biblioteki AqBanking.
 
 %package frontend-qbanking-devel
 Summary:	Header files for QBanking frontend library
-Summary(pl):	Pliki nag³ówkowe biblioteki frontendu QBanking
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki frontendu QBanking
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-frontend-qbanking = %{version}-%{release}
@@ -364,24 +364,24 @@ Requires:	qt-devel >= 3.0
 %description frontend-qbanking-devel
 Header files for QBanking frontend library.
 
-%description frontend-qbanking-devel -l pl
-Pliki nag³ówkowe biblioteki frontendu QBanking.
+%description frontend-qbanking-devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki frontendu QBanking.
 
 %package frontend-qbanking-static
 Summary:	Static QBanking frontend library
-Summary(pl):	Statyczna biblioteka frontendu QBanking
+Summary(pl.UTF-8):   Statyczna biblioteka frontendu QBanking
 Group:		Development/Libraries
 Requires:	%{name}-frontend-qbanking-devel = %{version}-%{release}
 
 %description frontend-qbanking-static
 Static QBanking frontend library.
 
-%description frontend-qbanking-static -l pl
+%description frontend-qbanking-static -l pl.UTF-8
 Statyczna biblioteka frontendu QBanking.
 
 %package -n python-%{name}
 Summary:	Python binding for AqBanking library
-Summary(pl):	Wi±zanie Pythona do biblioteki AqBanking
+Summary(pl.UTF-8):   WiÄ…zanie Pythona do biblioteki AqBanking
 Group:		Development/Languages/Python
 Requires:	%{name} = %{version}-%{release}
 Requires:	python-ctypes
@@ -390,8 +390,8 @@ Requires:	python-ctypes
 %description -n python-%{name}
 Python binding for AqBanking library.
 
-%description -n python-%{name} -l pl
-Wi±zanie Pythona do biblioteki AqBanking.
+%description -n python-%{name} -l pl.UTF-8
+WiÄ…zanie Pythona do biblioteki AqBanking.
 
 %prep
 %setup -q
