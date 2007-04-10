@@ -31,7 +31,7 @@ BuildRequires:	libtool >= 2:1.5
 BuildRequires:	python-ctypes
 BuildRequires:	python-devel >= 1:2.3
 BuildRequires:	rpm-pythonprov
-BuildRequires:	qt-devel >= 3.0
+BuildRequires:	qt-devel >= 1:3.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -361,7 +361,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki frontendu QBanking
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-frontend-qbanking = %{version}-%{release}
-Requires:	qt-devel >= 3.0
+Requires:	qt-devel >= 1:3.0
 
 %description frontend-qbanking-devel
 Header files for QBanking frontend library.
