@@ -1,0 +1,11 @@
+--- aqbanking-2.3.2/mksymlinks.sh.in.wiget	2007-08-11 14:49:28.000000000 +0200
++++ aqbanking-2.3.2/mksymlinks.sh.in	2007-08-11 14:49:36.000000000 +0200
+@@ -23,7 +23,7 @@ bprefix=`pwd`
+ # functions
+ #
+ 
+-function symlinkFolder() {
++function symlinkFolder {
+   local dfiles
+   local src
+   local dst
