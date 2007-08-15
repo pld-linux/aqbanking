@@ -497,8 +497,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/aqbanking/plugins/*/imexporters/*.xml
 %dir %{_libdir}/aqbanking/plugins/*/providers
 %dir %{_libdir}/aqbanking/plugins/*/wizards
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/wizards/qt3-wizard
-%{_libdir}/aqbanking/plugins/*/wizards/qt3_wizard.xml
 %attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/dbio/*.so*
 %{_libdir}/gwenhywfar/plugins/*/dbio/*.xml
 %{_datadir}/aqbanking
@@ -573,9 +571,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqhbci.so*
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules/aqhbci.so*
 %{_libdir}/aqbanking/plugins/*/providers/aqhbci.xml
-#%dir %{_libdir}/aqbanking/plugins/*/wizards/aqhbci
-#%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/wizards/aqhbci/aqhbci-qt3-wizard
-#%{_libdir}/aqbanking/plugins/*/wizards/aqhbci/kde_wizard.xml
 %attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/crypttoken/pintan.so
 %{_libdir}/gwenhywfar/plugins/*/crypttoken/pintan.xml
 %{_datadir}/aqhbci
@@ -598,9 +593,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqofxconnect.so*
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules/aqofxconnect.so*
 %{_libdir}/aqbanking/plugins/*/providers/aqofxconnect.xml
-#%dir %{_libdir}/aqbanking/plugins/*/wizards/aqofxconnect
-#%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/wizards/aqofxconnect/aqofxconnect-qt3-wizard
-#%{_libdir}/aqbanking/plugins/*/wizards/aqofxconnect/qt_wizard.xml
 
 %files backend-aqofxconnect-devel
 %defattr(644,root,root,755)
@@ -671,6 +663,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/qb-help
 %attr(755,root,root) %{_libdir}/libqbanking.so.*.*.*
+%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/wizards/qt3-wizard
+%{_libdir}/aqbanking/plugins/*/wizards/qt3_wizard.xml
 
 %files frontend-qbanking-devel
 %defattr(644,root,root,755)
