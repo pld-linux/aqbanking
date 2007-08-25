@@ -1,12 +1,13 @@
 #
 # TODO:
 # - fix building without chipcard (aclocal fail)
-# - add aqbanking-backend-aqnone-devel and aqbanking-backend-aqnone-static subpackages
 #
 # Conditional build:
 %bcond_without	chipcard	# aqgeldkarte backend
+%bcond_without	fox		# fbanking frontend
 %bcond_without	gtk		# g2banking frontend
 %bcond_without	kde		# kbanking frontend
+%bcond_with	yellownet	# yellownet backend (x86-only, no sources currently)
 #
 Summary:	A library for online banking functions and financial data import/export
 Summary(pl.UTF-8):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
@@ -19,22 +20,22 @@ Source0:	http://dl.sourceforge.net/aqbanking/%{name}-%{version}.tar.gz
 # Source0-md5:	ae34fc0c0e8f3b92728c4c6a36cc7697
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-nobash.patch
-#Patch2:		%{name}-libsuffix.patch
 URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake
+%{?with_fox:BuildRequires:	fox-devel >= 1.6.0}
 BuildRequires:	gettext-devel
 BuildRequires:	gwenhywfar-devel >= 2.3.0
 %if %{with gtk}
-BuildRequires:	gtk+2-devel >= 2.0.0
+BuildRequires:	gtk+2-devel >= 1:2.0.0
 BuildRequires:	libglade2 >= 2.0.0
 %endif
 %{?with_kde:BuildRequires:	kdelibs-devel >= 3.0}
 BuildRequires:	ktoblzcheck-devel
 %{?with_chipcard:BuildRequires:	libchipcard3-devel >= 3.0.0}
 BuildRequires:	libofx-devel >= 0.8.0
-BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
+BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 1:2.5
 BuildRequires:	rpm-pythonprov
 BuildRequires:	qt-devel >= 1:3.0
@@ -66,8 +67,6 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki AqBanking
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	gwenhywfar-devel >= 1.18.0
-# for libaqbankingpp only
-#Requires:	libstdc++-devel
 
 %description devel
 Header files for AqBanking library.
@@ -86,18 +85,6 @@ Static AqBanking libraries.
 
 %description static -l pl.UTF-8
 Statyczne biblioteki AqBanking.
-
-%package backend-aqnone
-Summary:	Aqnone backend for AqBanking library
-Summary(pl.UTF-8):	Backend Aqnone dla biblioteki AqBanking
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description backend-aqnone
-Aqnone backend for AqBanking library.
-
-%description backend-aqnone -l pl.UTF-8
-Backend Aqnone dla biblioteki AqBanking.
 
 %package backend-aqdtaus
 Summary:	AqDTAUS backend for AqBanking library
@@ -211,6 +198,43 @@ Static AqHBCI backend library.
 %description backend-aqhbci-static -l pl.UTF-8
 Statyczna biblioteka backendu AqHBCI.
 
+%package backend-aqnone
+Summary:	Aqnone backend for AqBanking library
+Summary(pl.UTF-8):	Backend Aqnone dla biblioteki AqBanking
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description backend-aqnone
+Aqnone backend for AqBanking library.
+
+%description backend-aqnone -l pl.UTF-8
+Backend Aqnone dla biblioteki AqBanking.
+
+%package backend-aqnone-devel
+Summary:	Header files for Aqnone backend library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki backendu Aqnone
+Group:		Development/Libraries
+Requires:	%{name}-backend-aqnone = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description backend-aqnone-devel
+Header files for Aqnone backend library.
+
+%description backend-aqnone-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki backendu Aqnone.
+
+%package backend-aqnone-static
+Summary:	Static Aqnone backend library
+Summary(pl.UTF-8):	Statyczna biblioteka backendu Aqnone
+Group:		Development/Libraries
+Requires:	%{name}-backend-aqnone-devel = %{version}-%{release}
+
+%description backend-aqnone-static
+Static Aqnone backend library.
+
+%description backend-aqnone-static -l pl.UTF-8
+Statyczna biblioteka backendu Aqnone.
+
 %package backend-aqofxconnect
 Summary:	AqOFXConnect backend for AqBanking library
 Summary(pl.UTF-8):	Backend AqOFXConnect dla biblioteki AqBanking
@@ -248,6 +272,46 @@ Static AqOFXConnect backend library.
 %description backend-aqofxconnect-static -l pl.UTF-8
 Statyczna biblioteka backendu AqOFXConnect.
 
+%package backend-aqyellownet
+Summary:	AqYellowNet backend for AqBanking library
+Summary(pl.UTF-8):	Backend AqYellowNet dla biblioteki AqBanking
+License:	custom
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description backend-aqyellownet
+AqYellowNet backend for AqBanking library.
+
+%description backend-aqyellownet -l pl.UTF-8
+Backend AqYellowNet dla biblioteki AqBanking.
+
+%package backend-aqyellownet-devel
+Summary:	Header files for AqYellowNet backend library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki backendu AqYellowNet
+License:	custom
+Group:		Development/Libraries
+Requires:	%{name}-backend-aqyellownet = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description backend-aqyellownet-devel
+Header files for AqYellowNet backend library.
+
+%description backend-aqyellownet-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki backendu AqYellowNet.
+
+%package backend-aqyellownet-static
+Summary:	Static AqYellowNet backend library
+Summary(pl.UTF-8):	Statyczna biblioteka backendu AqYellowNet
+License:	custom
+Group:		Development/Libraries
+Requires:	%{name}-backend-aqyellownet-devel = %{version}-%{release}
+
+%description backend-aqyellownet-static
+Static AqYellowNet backend library.
+
+%description backend-aqyellownet-static -l pl.UTF-8
+Statyczna biblioteka backendu AqYellowNet.
+
 %package frontend-cbanking
 Summary:	Cbanking frontend for AqBanking library
 Summary(pl.UTF-8):	Frontend Cbanking dla biblioteki AqBanking
@@ -284,6 +348,44 @@ Static Cbanking frontend library.
 
 %description frontend-cbanking-static -l pl.UTF-8
 Statyczna biblioteka frontendu Cbanking.
+
+%package frontend-fbanking
+Summary:	Fbanking frontend for AqBanking library
+Summary(pl.UTF-8):	Frontend Fbanking dla biblioteki AqBanking
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description frontend-fbanking
+Fbanking frontend for AqBanking library.
+
+%description frontend-fbanking -l pl.UTF-8
+Frontend Fbanking dla biblioteki AqBanking.
+
+%package frontend-fbanking-devel
+Summary:	Header files for Fbanking frontend library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki frontendu Fbanking
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-frontend-fbanking = %{version}-%{release}
+Requires:	fox-devel >= 1.6.0
+
+%description frontend-fbanking-devel
+Header files for Fbanking frontend library.
+
+%description frontend-fbanking-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki frontendu Fbanking.
+
+%package frontend-fbanking-static
+Summary:	Static Fbanking frontend library
+Summary(pl.UTF-8):	Statyczna biblioteka frontendu Fbanking
+Group:		Development/Libraries
+Requires:	%{name}-frontend-fbanking-devel = %{version}-%{release}
+
+%description frontend-fbanking-static
+Static Fbanking frontend library.
+
+%description frontend-fbanking-static -l pl.UTF-8
+Statyczna biblioteka frontendu Fbanking.
 
 %package frontend-g2banking
 Summary:	G2Banking - GTK+ based frontend for AqBanking library
@@ -415,9 +517,8 @@ Wiązanie Pythona do biblioteki AqBanking.
 
 %prep
 %setup -q
-#patch0 -p1
+%patch0 -p1
 %patch1 -p1
-#patch2 -p1
 
 %build
 %{__libtoolize}
@@ -432,8 +533,8 @@ Wiązanie Pythona do biblioteki AqBanking.
 	--enable-libofx \
 	--enable-python \
 	--enable-static \
-	--with-backends="aqhbci aqdtaus%{?with_chipcard: aqgeldkarte} aqofxconnect" \
-	--with-frontends="cbanking%{?with_gtk: g2banking} qbanking%{?with_kde: kbanking}"
+	--with-backends="aqhbci aqdtaus%{?with_chipcard: aqgeldkarte} aqofxconnect%{?with_yellownet: aqyellownet}" \
+	--with-frontends="cbanking%{?with_fox: fbanking}%{?with_gtk: g2banking} qbanking%{?with_kde: kbanking}"
 
 %{__make} -j1
 
@@ -443,8 +544,16 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install -j1 \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/*/plugins/*/*/*.{la,a}
+rm -f $RPM_BUILD_ROOT%{_libdir}/aqbanking/plugins/*/*/*.{la,a}
+rm -f $RPM_BUILD_ROOT%{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules/*.{la,a}
+rm -f $RPM_BUILD_ROOT%{_libdir}/gwenhywfar/plugins/*/*/*.{la,a}
 rm -f $RPM_BUILD_ROOT%{py_sitescriptdir}/aqbanking/*.py
+
+%if %{with yellownet}
+# soname is libaqyellownet.so.0
+mv $RPM_BUILD_ROOT%{_libdir}/libaqyellownet.{so,so.0.0.0}
+ln -sf libaqyellownet.so.0.0.0 $RPM_BUILD_ROOT%{_libdir}/libaqyellownet.so
+%endif
 
 %find_lang %{name}
 
@@ -463,11 +572,20 @@ rm -rf $RPM_BUILD_ROOT
 %post	backend-aqhbci -p /sbin/ldconfig
 %postun	backend-aqhbci -p /sbin/ldconfig
 
+%post	backend-aqnone -p /sbin/ldconfig
+%postun	backend-aqnone -p /sbin/ldconfig
+
 %post	backend-aqofxconnect -p /sbin/ldconfig
 %postun	backend-aqofxconnect -p /sbin/ldconfig
 
+%post	backend-aqyellownet -p /sbin/ldconfig
+%postun	backend-aqyellownet -p /sbin/ldconfig
+
 %post	frontend-cbanking -p /sbin/ldconfig
 %postun	frontend-cbanking -p /sbin/ldconfig
+
+%post	frontend-fbanking -p /sbin/ldconfig
+%postun	frontend-fbanking -p /sbin/ldconfig
 
 %post	frontend-g2banking -p /sbin/ldconfig
 %postun	frontend-g2banking -p /sbin/ldconfig
@@ -513,12 +631,6 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libaqbanking.a
-
-%files backend-aqnone
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaqnone.so.*.*.*
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqnone.so*
-%{_libdir}/aqbanking/plugins/*/providers/aqnone.xml
 
 %files backend-aqdtaus
 %defattr(644,root,root,755)
@@ -587,6 +699,21 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libaqhbci.a
 
+%files backend-aqnone
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libaqnone.so.*.*.*
+%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqnone.so*
+%{_libdir}/aqbanking/plugins/*/providers/aqnone.xml
+
+%files backend-aqnone-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libaqnone.so
+%{_libdir}/libaqnone.la
+
+%files backend-aqnone-static
+%defattr(644,root,root,755)
+%{_libdir}/libaqnone.a
+
 %files backend-aqofxconnect
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaqofxconnect.so.*.*.*
@@ -606,6 +733,28 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libaqofxconnect.a
 
+%if %{with yellownet}
+%files backend-aqyellownet
+%defattr(644,root,root,755)
+%doc src/plugins/backends/aqyellownet/plugin/COPYING
+%attr(755,root,root) %{_libdir}/libaqyellownet.so.*.*.*
+%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqyellownet.so*
+%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules/aqyellownet.so*
+%{_libdir}/aqbanking/plugins/*/providers/aqyellownet.xml
+
+%files backend-aqyellownet-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/aqyellownet-config
+%attr(755,root,root) %{_libdir}/libaqyellownet.so
+#%{_libdir}/libaqyellownet.la
+%{_includedir}/aqyellownet
+%{_aclocaldir}/aqyellownet.m4
+
+#%files backend-aqyellownet-static
+#%defattr(644,root,root,755)
+#%{_libdir}/libaqyellownet.a
+%endif
+
 %files frontend-cbanking
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/cbanking-config
@@ -622,6 +771,23 @@ rm -rf $RPM_BUILD_ROOT
 %files frontend-cbanking-static
 %defattr(644,root,root,755)
 %{_libdir}/libcbanking.a
+
+%if %{with fox}
+%files frontend-fbanking
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libfbanking.so.*.*.*
+
+%files frontend-fbanking-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libfbanking.so
+%{_libdir}/libfbanking.la
+%{_includedir}/fbanking
+%{_pkgconfigdir}/fbanking.pc
+
+%files frontend-fbanking-static
+%defattr(644,root,root,755)
+%{_libdir}/libfbanking.a
+%endif
 
 %if %{with gtk}
 %files frontend-g2banking
