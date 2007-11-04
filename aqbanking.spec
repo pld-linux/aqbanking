@@ -9,15 +9,17 @@
 %bcond_without	kde		# kbanking frontend
 %bcond_with	yellownet	# yellownet backend (x86-only, no sources currently)
 #
+%define		beta	beta
+#
 Summary:	A library for online banking functions and financial data import/export
 Summary(pl.UTF-8):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
 Name:		aqbanking
-Version:	2.3.2
-Release:	0.1
+Version:	2.9.11
+Release:	0.%{beta}.1
 License:	GPL v2
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/aqbanking/%{name}-%{version}.tar.gz
-# Source0-md5:	ae34fc0c0e8f3b92728c4c6a36cc7697
+Source0:	http://dl.sourceforge.net/aqbanking/%{name}-%{version}%{beta}.tar.gz
+# Source0-md5:	094aceddda0563683eb0dbd0b92efe1f
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-nobash.patch
 URL:		http://www.aquamaniac.de/aqbanking/
@@ -25,14 +27,14 @@ BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake
 %{?with_fox:BuildRequires:	fox-devel >= 1.6.0}
 BuildRequires:	gettext-devel
-BuildRequires:	gwenhywfar-devel >= 2.3.0
+BuildRequires:	gwenhywfar-devel >= 2.9.8
 %if %{with gtk}
 BuildRequires:	gtk+2-devel >= 1:2.0.0
 BuildRequires:	libglade2 >= 2.0.0
 %endif
 %{?with_kde:BuildRequires:	kdelibs-devel >= 3.0}
 BuildRequires:	ktoblzcheck-devel
-%{?with_chipcard:BuildRequires:	libchipcard3-devel >= 3.0.0}
+%{?with_chipcard:BuildRequires:	libchipcard-devel >= 3.9.6}
 BuildRequires:	libofx-devel >= 0.8.0
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pkgconfig
@@ -516,8 +518,8 @@ Python binding for AqBanking library.
 Wiązanie Pythona do biblioteki AqBanking.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -q -n %{name}-%{version}%{beta}
+#%patch0 -p1
 %patch1 -p1
 
 %build
