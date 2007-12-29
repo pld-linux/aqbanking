@@ -1,7 +1,6 @@
 #
 # TODO:
 # - fix building without chipcard (aclocal fail)
-#
 # Conditional build:
 %bcond_without	chipcard	# aqgeldkarte backend
 %bcond_without	fox		# fbanking frontend
@@ -12,12 +11,12 @@
 Summary:	A library for online banking functions and financial data import/export
 Summary(pl.UTF-8):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
 Name:		aqbanking
-Version:	2.3.2
-Release:	0.2
+Version:	3.0.1
+Release:	0.1
 License:	GPL v2
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/aqbanking/%{name}-%{version}.tar.gz
-# Source0-md5:	ae34fc0c0e8f3b92728c4c6a36cc7697
+# Source0-md5:	be3bafd787973b33895d80bbc6104bf5
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-nobash.patch
 URL:		http://www.aquamaniac.de/aqbanking/
@@ -32,7 +31,7 @@ BuildRequires:	libglade2 >= 2.0.0
 %endif
 %{?with_kde:BuildRequires:	kdelibs-devel >= 3.0}
 BuildRequires:	ktoblzcheck-devel
-%{?with_chipcard:BuildRequires:	libchipcard3-devel >= 3.0.0}
+%{?with_chipcard:BuildRequires:	libchipcard-devel >= 3.0.0}
 BuildRequires:	libofx-devel >= 0.8.0
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pkgconfig
