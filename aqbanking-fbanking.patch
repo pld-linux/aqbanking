@@ -1,0 +1,42 @@
+--- aqbanking-3.0.1/src/frontends/fbanking/lib/fbanking.h.orig	2007-11-22 18:38:25.000000000 +0100
++++ aqbanking-3.0.1/src/frontends/fbanking/lib/fbanking.h	2008-01-05 15:44:21.931752905 +0100
+@@ -64,8 +64,8 @@
+ 
+ 
+ #include <aqbanking/banking.h>
+-#include <aqbanking++/banking.h>
+ #include <aqbanking/accstatus.h>
++#include <fbanking/banking.h>
+ 
+ #include <fx.h>
+ 
+--- aqbanking-3.0.1/src/frontends/fbanking/lib/Makefile.am.orig	2007-11-22 18:38:25.000000000 +0100
++++ aqbanking-3.0.1/src/frontends/fbanking/lib/Makefile.am	2008-01-05 15:47:07.330307706 +0100
+@@ -6,7 +6,6 @@
+   -I$(top_builddir)/headers \
+   -I$(srcdir)/dialogs -I$(srcdir)/widgets -I$(srcdir)/views \
+   -Idialogs -Iwidgets -Iviews \
+-  -I$(top_srcdir)/src/libs/aqbanking++ \
+   $(fox_includes) $(all_includes)
+ 
+ DEFS += -DBUILDING_FBANKING \
+@@ -20,17 +19,16 @@
+ 
+ iheaderdir = $(includedir)/fbanking
+ iheader_HEADERS=\
+- fbanking.h
++ fbanking.h banking.h
+ 
+ #noinst_HEADERS =
+ 
+ lib_LTLIBRARIES=libfbanking.la
+ 
+ libfbanking_la_SOURCES=\
+-  fbanking.cpp
++  fbanking.cpp banking.cpp
+ 
+ libfbanking_la_LIBADD=\
+- $(top_builddir)/src/libs/aqbanking++/libaqbankingpp.la \
+  $(aqbanking_internal_libs) $(gwenhywfar_libs) $(fox_libs)
+ 
+ libfbanking_la_LDFLAGS= -no-undefined \
