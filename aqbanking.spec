@@ -395,9 +395,8 @@ Summary:	Python binding for AqBanking library
 Summary(pl.UTF-8):	Wiązanie Pythona do biblioteki AqBanking
 Group:		Development/Languages/Python
 Requires:	%{name} = %{version}-%{release}
-# for python-ctypes
-Requires:	python-modules >= 1:2.5
-%pyrequires_eq	python-libs
+# for python-ctypes (>= 1:2.5 already forced by BR + _eq below)
+%pyrequires_eq	python-modules
 
 %description -n python-%{name}
 Python binding for AqBanking library.
