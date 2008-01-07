@@ -9,7 +9,7 @@ Summary:	A library for online banking functions and financial data import/export
 Summary(pl.UTF-8):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
 Name:		aqbanking
 Version:	3.0.1
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/aqbanking/%{name}-%{version}.tar.gz
@@ -395,7 +395,8 @@ Summary:	Python binding for AqBanking library
 Summary(pl.UTF-8):	Wiązanie Pythona do biblioteki AqBanking
 Group:		Development/Languages/Python
 Requires:	%{name} = %{version}-%{release}
-Requires:	python-ctypes
+# for python-ctypes
+Requires:	python-modules >= 1:2.5
 %pyrequires_eq	python-libs
 
 %description -n python-%{name}
