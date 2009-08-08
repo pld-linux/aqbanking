@@ -1,0 +1,10 @@
+--- aqbanking-3.8.3/src/plugins/backends/aqhbci/ui/qt3/libs/logmanager/error.cpp.wiget	2009-08-07 21:53:46.000000000 +0200
++++ aqbanking-3.8.3/src/plugins/backends/aqhbci/ui/qt3/libs/logmanager/error.cpp	2009-08-07 21:54:03.000000000 +0200
+@@ -30,6 +30,7 @@
+ #include <config.h>
+ #endif
+ 
++#include <cstdio>
+ #include "assert.h"
+ #include "error.h"
+ 

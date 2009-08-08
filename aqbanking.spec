@@ -1,31 +1,28 @@
 #
-# - fix building without chipcard (aclocal fail) or drop bcond
 # Conditional build:
-%bcond_without	chipcard	# aqgeldkarte backend
 %bcond_without	fox		# fbanking frontend
-%bcond_with	yellownet	# yellownet backend (x86-only, no sources currently)
 #
 Summary:	A library for online banking functions and financial data import/export
 Summary(pl.UTF-8):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
 Name:		aqbanking
-Version:	3.0.1
-Release:	2
+Version:	3.8.3
+Release:	1
 License:	GPL v2
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/aqbanking/%{name}-%{version}.tar.gz
-# Source0-md5:	be3bafd787973b33895d80bbc6104bf5
-Patch0:		%{name}-link.patch
-Patch1:		%{name}-nobash.patch
-Patch2:		%{name}-fbanking.patch
-Patch3:		%{name}-backends.patch
+# http://www2.aquamaniac.de/sites/download/packages.php
+Source0:	%{name}-%{version}.tar.gz
+# Source0-md5:	9b436d71cdacd5c4d34a93f76c7ff5e9
+Patch0:		%{name}-nobash.patch
+Patch1:		%{name}-fbanking.patch
+Patch2:		%{name}-cstdio.patch
 URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake
 %{?with_fox:BuildRequires:	fox-devel >= 1.6.0}
 BuildRequires:	gettext-devel
-BuildRequires:	gwenhywfar-devel >= 3.0.0
-BuildRequires:	ktoblzcheck-devel
-%{?with_chipcard:BuildRequires:	libchipcard-devel >= 4.0.0}
+BuildRequires:	gmp-devel
+BuildRequires:	gwenhywfar-devel >= 3.4.0
+BuildRequires:	ktoblzcheck-devel >= 1.10
 BuildRequires:	libofx-devel >= 0.8.0
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pkgconfig
@@ -41,6 +38,15 @@ Obsoletes:	aqbanking-frontend-g2banking-static
 Obsoletes:	aqbanking-frontend-kbanking
 Obsoletes:	aqbanking-frontend-kbanking-devel
 Obsoletes:	aqbanking-frontend-kbanking-static
+Obsoletes:	aqbanking-backend-aqdtaus
+Obsoletes:	aqbanking-backend-aqdtaus-devel
+Obsoletes:	aqbanking-backend-aqdtaus-static
+Obsoletes:	aqbanking-backend-aqgeldkarte
+Obsoletes:	aqbanking-backend-aqgeldkarte-devel
+Obsoletes:	aqbanking-backend-aqgeldkarte-static
+Obsoletes:	aqbanking-backend-aqyellownet
+Obsoletes:	aqbanking-backend-aqyellownet-devel
+Obsoletes:	aqbanking-backend-aqyellownet-static
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -87,81 +93,6 @@ Static AqBanking libraries.
 
 %description static -l pl.UTF-8
 Statyczne biblioteki AqBanking.
-
-%package backend-aqdtaus
-Summary:	AqDTAUS backend for AqBanking library
-Summary(pl.UTF-8):	Backend AqDTAUS dla biblioteki AqBanking
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description backend-aqdtaus
-AqDTAUS backend for AqBanking library.
-
-%description backend-aqdtaus -l pl.UTF-8
-Backend AqDTAUS dla biblioteki AqBanking.
-
-%package backend-aqdtaus-devel
-Summary:	Header files for AqDTAUS backend library
-Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki backendu AqDTAUS
-Group:		Development/Libraries
-Requires:	%{name}-backend-aqdtaus = %{version}-%{release}
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description backend-aqdtaus-devel
-Header files for AqDTAUS backend library.
-
-%description backend-aqdtaus-devel -l pl.UTF-8
-Pliki nagłówkowe biblioteki backendu AqDTAUS.
-
-%package backend-aqdtaus-static
-Summary:	Static AqDTAUS backend library
-Summary(pl.UTF-8):	Statyczna biblioteka backendu AqDTAUS
-Group:		Development/Libraries
-Requires:	%{name}-backend-aqdtaus-devel = %{version}-%{release}
-
-%description backend-aqdtaus-static
-Static AqDTAUS backend library.
-
-%description backend-aqdtaus-static -l pl.UTF-8
-Statyczna biblioteka backendu AqDTAUS.
-
-%package backend-aqgeldkarte
-Summary:	AqGeldKarte backend for AqBanking library
-Summary(pl.UTF-8):	Backend AqGeldKarte dla biblioteki AqBanking
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description backend-aqgeldkarte
-AqGeldKarte backend for AqBanking library.
-
-%description backend-aqgeldkarte -l pl.UTF-8
-Backend AqGeldKarte dla biblioteki AqBanking.
-
-%package backend-aqgeldkarte-devel
-Summary:	Header files for AqGeldKarte backend library
-Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki backendu AqGeldKarte
-Group:		Development/Libraries
-Requires:	%{name}-backend-aqgeldkarte = %{version}-%{release}
-Requires:	%{name}-devel = %{version}-%{release}
-Requires:	libchipcard-devel >= 4.0.0
-
-%description backend-aqgeldkarte-devel
-Header files for AqGeldKarte backend library.
-
-%description backend-aqgeldkarte-devel -l pl.UTF-8
-Pliki nagłówkowe biblioteki backendu AqGeldKarte.
-
-%package backend-aqgeldkarte-static
-Summary:	Static AqGeldKarte backend library
-Summary(pl.UTF-8):	Statyczna biblioteka backendu AqGeldKarte
-Group:		Development/Libraries
-Requires:	%{name}-backend-aqgeldkarte-devel = %{version}-%{release}
-
-%description backend-aqgeldkarte-static
-Static AqGeldKarte backend library.
-
-%description backend-aqgeldkarte-static -l pl.UTF-8
-Statyczna biblioteka backendu AqGeldKarte.
 
 %package backend-aqhbci
 Summary:	AqHBCI backend for AqBanking library
@@ -274,46 +205,6 @@ Static AqOFXConnect backend library.
 %description backend-aqofxconnect-static -l pl.UTF-8
 Statyczna biblioteka backendu AqOFXConnect.
 
-%package backend-aqyellownet
-Summary:	AqYellowNet backend for AqBanking library
-Summary(pl.UTF-8):	Backend AqYellowNet dla biblioteki AqBanking
-License:	custom
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description backend-aqyellownet
-AqYellowNet backend for AqBanking library.
-
-%description backend-aqyellownet -l pl.UTF-8
-Backend AqYellowNet dla biblioteki AqBanking.
-
-%package backend-aqyellownet-devel
-Summary:	Header files for AqYellowNet backend library
-Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki backendu AqYellowNet
-License:	custom
-Group:		Development/Libraries
-Requires:	%{name}-backend-aqyellownet = %{version}-%{release}
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description backend-aqyellownet-devel
-Header files for AqYellowNet backend library.
-
-%description backend-aqyellownet-devel -l pl.UTF-8
-Pliki nagłówkowe biblioteki backendu AqYellowNet.
-
-%package backend-aqyellownet-static
-Summary:	Static AqYellowNet backend library
-Summary(pl.UTF-8):	Statyczna biblioteka backendu AqYellowNet
-License:	custom
-Group:		Development/Libraries
-Requires:	%{name}-backend-aqyellownet-devel = %{version}-%{release}
-
-%description backend-aqyellownet-static
-Static AqYellowNet backend library.
-
-%description backend-aqyellownet-static -l pl.UTF-8
-Statyczna biblioteka backendu AqYellowNet.
-
 %package frontend-fbanking
 Summary:	Fbanking frontend for AqBanking library
 Summary(pl.UTF-8):	Frontend Fbanking dla biblioteki AqBanking
@@ -409,7 +300,6 @@ Wiązanie Pythona do biblioteki AqBanking.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 ln -s ../../qbanking/lib/banking.h src/frontends/fbanking/lib
 ln -s ../../qbanking/lib/banking.cpp src/frontends/fbanking/lib
@@ -429,7 +319,7 @@ ln -s ../../qbanking/lib/banking.cpp src/frontends/fbanking/lib
 	--enable-libofx \
 	--enable-python \
 	--enable-static \
-	--with-backends="aqhbci aqdtaus%{?with_chipcard: aqgeldkarte} aqofxconnect%{?with_yellownet: aqyellownet}" \
+	--with-backends="aqhbci aqofxconnect aqnone" \
 	--with-frontends="%{?with_fox:fbanking }qbanking"
 
 %{__make} -j1
@@ -459,12 +349,6 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%post	backend-aqdtaus -p /sbin/ldconfig
-%postun	backend-aqdtaus -p /sbin/ldconfig
-
-%post	backend-aqgeldkarte -p /sbin/ldconfig
-%postun	backend-aqgeldkarte -p /sbin/ldconfig
-
 %post	backend-aqhbci -p /sbin/ldconfig
 %postun	backend-aqhbci -p /sbin/ldconfig
 
@@ -473,9 +357,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	backend-aqofxconnect -p /sbin/ldconfig
 %postun	backend-aqofxconnect -p /sbin/ldconfig
-
-%post	backend-aqyellownet -p /sbin/ldconfig
-%postun	backend-aqyellownet -p /sbin/ldconfig
 
 %post	frontend-fbanking -p /sbin/ldconfig
 %postun	frontend-fbanking -p /sbin/ldconfig
@@ -525,52 +406,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libaqbanking.a
 
-%files backend-aqdtaus
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaqdtaus.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaqdtaus.so.4
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqdtaus.so*
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules/aqdtaus.so*
-%{_libdir}/aqbanking/plugins/*/providers/aqdtaus.xml
-
-%files backend-aqdtaus-devel
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaqdtaus.so
-%{_libdir}/libaqdtaus.la
-%{_includedir}/aqdtaus
-%{_aclocaldir}/aqdtaus.m4
-
-%files backend-aqdtaus-static
-%defattr(644,root,root,755)
-%{_libdir}/libaqdtaus.a
-
-%if %{with chipcard}
-%files backend-aqgeldkarte
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaqgeldkarte.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaqgeldkarte.so.5
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqgeldkarte.so*
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules/aqgeldkarte.so*
-%{_libdir}/aqbanking/plugins/*/providers/aqgeldkarte.xml
-
-%files backend-aqgeldkarte-devel
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaqgeldkarte.so
-%{_libdir}/libaqgeldkarte.la
-%{_includedir}/aqgeldkarte
-%{_aclocaldir}/aqgeldkarte.m4
-
-%files backend-aqgeldkarte-static
-%defattr(644,root,root,755)
-%{_libdir}/libaqgeldkarte.a
-%endif
-
 %files backend-aqhbci
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/aqhbci-tool3
 %attr(755,root,root) %{_bindir}/hbcixml3
 %attr(755,root,root) %{_libdir}/libaqhbci.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaqhbci.so.12
+%attr(755,root,root) %ghost %{_libdir}/libaqhbci.so.13
 %dir %{_libdir}/aqbanking/plugins/*/debugger/aqhbci
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/debugger/aqhbci/aqhbci-qt3-debug
 %{_libdir}/aqbanking/plugins/*/debugger/aqhbci/qt_debug.xml
@@ -623,27 +464,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libaqofxconnect.a
 
-%if %{with yellownet}
-%files backend-aqyellownet
-%defattr(644,root,root,755)
-%doc src/plugins/backends/aqyellownet/plugin/COPYING
-%attr(755,root,root) %{_libdir}/libaqyellownet.so.*.*.*
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqyellownet.so*
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules/aqyellownet.so*
-%{_libdir}/aqbanking/plugins/*/providers/aqyellownet.xml
-
-%files backend-aqyellownet-devel
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaqyellownet.so
-#%{_libdir}/libaqyellownet.la
-%{_includedir}/aqyellownet
-%{_aclocaldir}/aqyellownet.m4
-
-#%files backend-aqyellownet-static
-#%defattr(644,root,root,755)
-#%{_libdir}/libaqyellownet.a
-%endif
-
 %if %{with fox}
 %files frontend-fbanking
 %defattr(644,root,root,755)
@@ -664,9 +484,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files frontend-qbanking
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/qb-help5
+%attr(755,root,root) %{_bindir}/qb-help6
 %attr(755,root,root) %{_libdir}/libqbanking.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libqbanking.so.5
+%attr(755,root,root) %ghost %{_libdir}/libqbanking.so.6
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/wizards/qt3-wizard
 %{_libdir}/aqbanking/plugins/*/wizards/qt3_wizard.xml
 %dir %{_datadir}/aqbanking/frontends/qbanking
