@@ -1,24 +1,17 @@
-#
-# Conditional build:
-%bcond_without	fox		# fbanking frontend
-#
 Summary:	A library for online banking functions and financial data import/export
 Summary(pl.UTF-8):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
 Name:		aqbanking
-Version:	3.8.3
+Version:	4.1.0
 Release:	1
 License:	GPL v2
 Group:		Libraries
 # http://www2.aquamaniac.de/sites/download/packages.php
 Source0:	%{name}-%{version}.tar.gz
-# Source0-md5:	9b436d71cdacd5c4d34a93f76c7ff5e9
+# Source0-md5:	247089ccffad60baebc35390315e49d2
 Patch0:		%{name}-nobash.patch
-Patch1:		%{name}-fbanking.patch
-Patch2:		%{name}-cstdio.patch
 URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake
-%{?with_fox:BuildRequires:	fox-devel >= 1.6.0}
 BuildRequires:	gettext-devel
 BuildRequires:	gmp-devel
 BuildRequires:	gwenhywfar-devel >= 3.4.0
@@ -26,9 +19,7 @@ BuildRequires:	ktoblzcheck-devel >= 1.10
 BuildRequires:	libofx-devel >= 0.8.0
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pkgconfig
-BuildRequires:	python-devel >= 1:2.5
 BuildRequires:	qt-devel >= 1:3.0
-BuildRequires:	rpm-pythonprov
 Obsoletes:	aqbanking-frontend-cbanking
 Obsoletes:	aqbanking-frontend-cbanking-devel
 Obsoletes:	aqbanking-frontend-cbanking-static
@@ -38,6 +29,9 @@ Obsoletes:	aqbanking-frontend-g2banking-static
 Obsoletes:	aqbanking-frontend-kbanking
 Obsoletes:	aqbanking-frontend-kbanking-devel
 Obsoletes:	aqbanking-frontend-kbanking-static
+Obsoletes:	aqbanking-frontend-fbanking
+Obsoletes:	aqbanking-frontend-fbanking-devel
+Obsoletes:	aqbanking-frontend-fbanking-static
 Obsoletes:	aqbanking-backend-aqdtaus
 Obsoletes:	aqbanking-backend-aqdtaus-devel
 Obsoletes:	aqbanking-backend-aqdtaus-static
@@ -47,6 +41,7 @@ Obsoletes:	aqbanking-backend-aqgeldkarte-static
 Obsoletes:	aqbanking-backend-aqyellownet
 Obsoletes:	aqbanking-backend-aqyellownet-devel
 Obsoletes:	aqbanking-backend-aqyellownet-static
+Obsoletes:	python-aqbanking
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -205,44 +200,6 @@ Static AqOFXConnect backend library.
 %description backend-aqofxconnect-static -l pl.UTF-8
 Statyczna biblioteka backendu AqOFXConnect.
 
-%package frontend-fbanking
-Summary:	Fbanking frontend for AqBanking library
-Summary(pl.UTF-8):	Frontend Fbanking dla biblioteki AqBanking
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description frontend-fbanking
-Fbanking frontend for AqBanking library.
-
-%description frontend-fbanking -l pl.UTF-8
-Frontend Fbanking dla biblioteki AqBanking.
-
-%package frontend-fbanking-devel
-Summary:	Header files for Fbanking frontend library
-Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki frontendu Fbanking
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-Requires:	%{name}-frontend-fbanking = %{version}-%{release}
-Requires:	fox-devel >= 1.6.0
-
-%description frontend-fbanking-devel
-Header files for Fbanking frontend library.
-
-%description frontend-fbanking-devel -l pl.UTF-8
-Pliki nagłówkowe biblioteki frontendu Fbanking.
-
-%package frontend-fbanking-static
-Summary:	Static Fbanking frontend library
-Summary(pl.UTF-8):	Statyczna biblioteka frontendu Fbanking
-Group:		Development/Libraries
-Requires:	%{name}-frontend-fbanking-devel = %{version}-%{release}
-
-%description frontend-fbanking-static
-Static Fbanking frontend library.
-
-%description frontend-fbanking-static -l pl.UTF-8
-Statyczna biblioteka frontendu Fbanking.
-
 %package frontend-qbanking
 Summary:	QBanking - Qt-based frontend for AqBanking library
 Summary(pl.UTF-8):	QBanking - oparty na Qt frontend dla biblioteki AqBanking
@@ -281,32 +238,9 @@ Static QBanking frontend library.
 %description frontend-qbanking-static -l pl.UTF-8
 Statyczna biblioteka frontendu QBanking.
 
-%package -n python-%{name}
-Summary:	Python binding for AqBanking library
-Summary(pl.UTF-8):	Wiązanie Pythona do biblioteki AqBanking
-Group:		Development/Languages/Python
-Requires:	%{name} = %{version}-%{release}
-# for python-ctypes (>= 1:2.5 already forced by BR + _eq below)
-%pyrequires_eq	python-modules
-
-%description -n python-%{name}
-Python binding for AqBanking library.
-
-%description -n python-%{name} -l pl.UTF-8
-Wiązanie Pythona do biblioteki AqBanking.
-
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-
-ln -s ../../qbanking/lib/banking.h src/frontends/fbanking/lib
-ln -s ../../qbanking/lib/banking.cpp src/frontends/fbanking/lib
-
-%ifnarch %{ix86}
-%{?with_yellownet:%{error: yellownet backend is x86-only}exit 1}
-%endif
 
 %build
 %{__libtoolize}
@@ -317,10 +251,9 @@ ln -s ../../qbanking/lib/banking.cpp src/frontends/fbanking/lib
 %configure \
 	--with-qt3-libs=%{_libdir} \
 	--enable-libofx \
-	--enable-python \
 	--enable-static \
 	--with-backends="aqhbci aqofxconnect aqnone" \
-	--with-frontends="%{?with_fox:fbanking }qbanking"
+	--with-frontends="qbanking"
 
 %{__make} -j1
 
@@ -358,17 +291,15 @@ rm -rf $RPM_BUILD_ROOT
 %post	backend-aqofxconnect -p /sbin/ldconfig
 %postun	backend-aqofxconnect -p /sbin/ldconfig
 
-%post	frontend-fbanking -p /sbin/ldconfig
-%postun	frontend-fbanking -p /sbin/ldconfig
-
 %post	frontend-qbanking -p /sbin/ldconfig
 %postun	frontend-qbanking -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc ChangeLog ChangeLog README TODO
+%attr(755,root,root) %{_bindir}/aqbanking-cli
 %attr(755,root,root) %{_libdir}/libaqbanking.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaqbanking.so.20
+%attr(755,root,root) %ghost %{_libdir}/libaqbanking.so.29
 %dir %{_libdir}/aqbanking
 %dir %{_libdir}/aqbanking/plugins
 %dir %{_libdir}/aqbanking/plugins/*
@@ -408,10 +339,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files backend-aqhbci
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/aqhbci-tool3
+%attr(755,root,root) %{_bindir}/aqhbci-tool4
 %attr(755,root,root) %{_bindir}/hbcixml3
 %attr(755,root,root) %{_libdir}/libaqhbci.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaqhbci.so.13
+%attr(755,root,root) %ghost %{_libdir}/libaqhbci.so.16
 %dir %{_libdir}/aqbanking/plugins/*/debugger/aqhbci
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/debugger/aqhbci/aqhbci-qt3-debug
 %{_libdir}/aqbanking/plugins/*/debugger/aqhbci/qt_debug.xml
@@ -433,7 +364,7 @@ rm -rf $RPM_BUILD_ROOT
 %files backend-aqnone
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaqnone.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaqnone.so.20
+%attr(755,root,root) %ghost %{_libdir}/libaqnone.so.29
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqnone.so*
 %{_libdir}/aqbanking/plugins/*/providers/aqnone.xml
 
@@ -449,7 +380,7 @@ rm -rf $RPM_BUILD_ROOT
 %files backend-aqofxconnect
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaqofxconnect.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaqofxconnect.so.4
+%attr(755,root,root) %ghost %{_libdir}/libaqofxconnect.so.5
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqofxconnect.so*
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules/aqofxconnect.so*
 %{_libdir}/aqbanking/plugins/*/providers/aqofxconnect.xml
@@ -464,29 +395,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libaqofxconnect.a
 
-%if %{with fox}
-%files frontend-fbanking
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libfbanking.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfbanking.so.2
-
-%files frontend-fbanking-devel
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libfbanking.so
-%{_libdir}/libfbanking.la
-%{_includedir}/fbanking
-%{_pkgconfigdir}/fbanking.pc
-
-%files frontend-fbanking-static
-%defattr(644,root,root,755)
-%{_libdir}/libfbanking.a
-%endif
-
 %files frontend-qbanking
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/qb-help6
+%attr(755,root,root) %{_bindir}/qb-help8
 %attr(755,root,root) %{_libdir}/libqbanking.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libqbanking.so.6
+%attr(755,root,root) %ghost %{_libdir}/libqbanking.so.8
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/wizards/qt3-wizard
 %{_libdir}/aqbanking/plugins/*/wizards/qt3_wizard.xml
 %dir %{_datadir}/aqbanking/frontends/qbanking
@@ -503,8 +416,3 @@ rm -rf $RPM_BUILD_ROOT
 %files frontend-qbanking-static
 %defattr(644,root,root,755)
 %{_libdir}/libqbanking.a
-
-%files -n python-%{name}
-%defattr(644,root,root,755)
-%dir %{py_sitescriptdir}/aqbanking
-%{py_sitescriptdir}/aqbanking/*.py[co]
