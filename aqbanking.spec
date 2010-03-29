@@ -2,7 +2,7 @@ Summary:	A library for online banking functions and financial data import/export
 Summary(pl.UTF-8):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
 Name:		aqbanking
 Version:	4.1.0
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Libraries
 # http://www2.aquamaniac.de/sites/download/packages.php
