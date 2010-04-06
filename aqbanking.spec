@@ -20,18 +20,7 @@ BuildRequires:	libofx-devel >= 0.8.0
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pkgconfig
 BuildRequires:	qt-devel >= 1:3.0
-Obsoletes:	aqbanking-frontend-cbanking
-Obsoletes:	aqbanking-frontend-cbanking-devel
-Obsoletes:	aqbanking-frontend-cbanking-static
-Obsoletes:	aqbanking-frontend-g2banking
-Obsoletes:	aqbanking-frontend-g2banking-devel
-Obsoletes:	aqbanking-frontend-g2banking-static
-Obsoletes:	aqbanking-frontend-kbanking
-Obsoletes:	aqbanking-frontend-kbanking-devel
-Obsoletes:	aqbanking-frontend-kbanking-static
-Obsoletes:	aqbanking-frontend-fbanking
-Obsoletes:	aqbanking-frontend-fbanking-devel
-Obsoletes:	aqbanking-frontend-fbanking-static
+BuildRequires:	which
 Obsoletes:	aqbanking-backend-aqdtaus
 Obsoletes:	aqbanking-backend-aqdtaus-devel
 Obsoletes:	aqbanking-backend-aqdtaus-static
@@ -41,6 +30,18 @@ Obsoletes:	aqbanking-backend-aqgeldkarte-static
 Obsoletes:	aqbanking-backend-aqyellownet
 Obsoletes:	aqbanking-backend-aqyellownet-devel
 Obsoletes:	aqbanking-backend-aqyellownet-static
+Obsoletes:	aqbanking-frontend-cbanking
+Obsoletes:	aqbanking-frontend-cbanking-devel
+Obsoletes:	aqbanking-frontend-cbanking-static
+Obsoletes:	aqbanking-frontend-fbanking
+Obsoletes:	aqbanking-frontend-fbanking-devel
+Obsoletes:	aqbanking-frontend-fbanking-static
+Obsoletes:	aqbanking-frontend-g2banking
+Obsoletes:	aqbanking-frontend-g2banking-devel
+Obsoletes:	aqbanking-frontend-g2banking-static
+Obsoletes:	aqbanking-frontend-kbanking
+Obsoletes:	aqbanking-frontend-kbanking-devel
+Obsoletes:	aqbanking-frontend-kbanking-static
 Obsoletes:	python-aqbanking
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
