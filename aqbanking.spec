@@ -1,20 +1,22 @@
+#
+# TODO: unpackaged files
+#
 Summary:	A library for online banking functions and financial data import/export
 Summary(pl.UTF-8):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
 Name:		aqbanking
-Version:	4.1.0
-Release:	2
+Version:	5.0.1
+Release:	0.1
 License:	GPL v2
 Group:		Libraries
 # http://www2.aquamaniac.de/sites/download/packages.php
 Source0:	%{name}-%{version}.tar.gz
-# Source0-md5:	247089ccffad60baebc35390315e49d2
-Patch0:		%{name}-nobash.patch
+# Source0-md5:	dc7dd799a4a50313b5f11b9a0861b72b
 URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	gmp-devel
-BuildRequires:	gwenhywfar-devel >= 3.4.0
+BuildRequires:	gwenhywfar-devel >= 4.0.0
 BuildRequires:	ktoblzcheck-devel >= 1.10
 BuildRequires:	libofx-devel >= 0.8.0
 BuildRequires:	libtool >= 2:1.5
@@ -201,47 +203,8 @@ Static AqOFXConnect backend library.
 %description backend-aqofxconnect-static -l pl.UTF-8
 Statyczna biblioteka backendu AqOFXConnect.
 
-%package frontend-qbanking
-Summary:	QBanking - Qt-based frontend for AqBanking library
-Summary(pl.UTF-8):	QBanking - oparty na Qt frontend dla biblioteki AqBanking
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description frontend-qbanking
-QBanking - Qt-based frontend for AqBanking library.
-
-%description frontend-qbanking -l pl.UTF-8
-QBanking - oparty na Qt frontend dla biblioteki AqBanking.
-
-%package frontend-qbanking-devel
-Summary:	Header files for QBanking frontend library
-Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki frontendu QBanking
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-Requires:	%{name}-frontend-qbanking = %{version}-%{release}
-Requires:	qt-devel >= 1:3.0
-
-%description frontend-qbanking-devel
-Header files for QBanking frontend library.
-
-%description frontend-qbanking-devel -l pl.UTF-8
-Pliki nagłówkowe biblioteki frontendu QBanking.
-
-%package frontend-qbanking-static
-Summary:	Static QBanking frontend library
-Summary(pl.UTF-8):	Statyczna biblioteka frontendu QBanking
-Group:		Development/Libraries
-Requires:	%{name}-frontend-qbanking-devel = %{version}-%{release}
-
-%description frontend-qbanking-static
-Static QBanking frontend library.
-
-%description frontend-qbanking-static -l pl.UTF-8
-Statyczna biblioteka frontendu QBanking.
-
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__libtoolize}
@@ -292,37 +255,26 @@ rm -rf $RPM_BUILD_ROOT
 %post	backend-aqofxconnect -p /sbin/ldconfig
 %postun	backend-aqofxconnect -p /sbin/ldconfig
 
-%post	frontend-qbanking -p /sbin/ldconfig
-%postun	frontend-qbanking -p /sbin/ldconfig
-
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc ChangeLog README TODO
 %attr(755,root,root) %{_bindir}/aqbanking-cli
 %attr(755,root,root) %{_libdir}/libaqbanking.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaqbanking.so.29
+%attr(755,root,root) %ghost %{_libdir}/libaqbanking.so.33
 %dir %{_libdir}/aqbanking
 %dir %{_libdir}/aqbanking/plugins
 %dir %{_libdir}/aqbanking/plugins/*
 %dir %{_libdir}/aqbanking/plugins/*/bankinfo
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/bankinfo/*.so*
 %{_libdir}/aqbanking/plugins/*/bankinfo/*.xml
-%dir %{_libdir}/aqbanking/plugins/*/debugger
-%dir %{_libdir}/aqbanking/plugins/*/frontends
-%dir %{_libdir}/aqbanking/plugins/*/frontends/qbanking
-%dir %{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules
 %dir %{_libdir}/aqbanking/plugins/*/imexporters
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/imexporters/*.so*
 %{_libdir}/aqbanking/plugins/*/imexporters/*.xml
 %dir %{_libdir}/aqbanking/plugins/*/providers
-%dir %{_libdir}/aqbanking/plugins/*/wizards
 %attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/dbio/*.so*
 %{_libdir}/gwenhywfar/plugins/*/dbio/*.xml
 %dir %{_datadir}/aqbanking
-%dir %{_datadir}/aqbanking/backends
 %{_datadir}/aqbanking/bankinfo
-%dir %{_datadir}/aqbanking/frontends
-%dir %{_datadir}/aqbanking/i18n
 %{_datadir}/aqbanking/imexporters
 
 %files devel
@@ -330,7 +282,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/aqbanking-config
 %attr(755,root,root) %{_libdir}/libaqbanking.so
 %{_libdir}/libaqbanking.la
-%{_includedir}/aqbanking
+%{_includedir}/aqbanking5
 %{_aclocaldir}/aqbanking.m4
 %{_pkgconfigdir}/aqbanking.pc
 
@@ -343,12 +295,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/aqhbci-tool4
 %attr(755,root,root) %{_bindir}/hbcixml3
 %attr(755,root,root) %{_libdir}/libaqhbci.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaqhbci.so.16
-%dir %{_libdir}/aqbanking/plugins/*/debugger/aqhbci
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/debugger/aqhbci/aqhbci-qt3-debug
-%{_libdir}/aqbanking/plugins/*/debugger/aqhbci/qt_debug.xml
+%attr(755,root,root) %ghost %{_libdir}/libaqhbci.so.19
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqhbci.so*
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules/aqhbci.so*
 %{_libdir}/aqbanking/plugins/*/providers/aqhbci.xml
 %{_datadir}/aqbanking/backends/aqhbci
 
@@ -356,7 +304,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaqhbci.so
 %{_libdir}/libaqhbci.la
-%{_includedir}/aqhbci
 
 %files backend-aqhbci-static
 %defattr(644,root,root,755)
@@ -365,7 +312,7 @@ rm -rf $RPM_BUILD_ROOT
 %files backend-aqnone
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaqnone.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaqnone.so.29
+%attr(755,root,root) %ghost %{_libdir}/libaqnone.so.33
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqnone.so*
 %{_libdir}/aqbanking/plugins/*/providers/aqnone.xml
 
@@ -381,39 +328,15 @@ rm -rf $RPM_BUILD_ROOT
 %files backend-aqofxconnect
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaqofxconnect.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaqofxconnect.so.5
+%attr(755,root,root) %ghost %{_libdir}/libaqofxconnect.so.7
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqofxconnect.so*
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules/aqofxconnect.so*
 %{_libdir}/aqbanking/plugins/*/providers/aqofxconnect.xml
 
 %files backend-aqofxconnect-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaqofxconnect.so
 %{_libdir}/libaqofxconnect.la
-%{_includedir}/aqofxconnect
 
 %files backend-aqofxconnect-static
 %defattr(644,root,root,755)
 %{_libdir}/libaqofxconnect.a
-
-%files frontend-qbanking
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/qb-help8
-%attr(755,root,root) %{_libdir}/libqbanking.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libqbanking.so.8
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/wizards/qt3-wizard
-%{_libdir}/aqbanking/plugins/*/wizards/qt3_wizard.xml
-%dir %{_datadir}/aqbanking/frontends/qbanking
-%dir %{_datadir}/aqbanking/frontends/qbanking/help
-%lang(de) %{_datadir}/aqbanking/frontends/qbanking/help/de
-%lang(de) %{_datadir}/aqbanking/i18n/de.qm
-
-%files frontend-qbanking-devel
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libqbanking.so
-%{_libdir}/libqbanking.la
-%{_includedir}/qbanking
-
-%files frontend-qbanking-static
-%defattr(644,root,root,755)
-%{_libdir}/libqbanking.a
