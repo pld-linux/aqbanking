@@ -298,6 +298,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libaqhbci.so.19
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqhbci.so*
 %{_libdir}/aqbanking/plugins/*/providers/aqhbci.xml
+%dir %{_datadir}/aqbanking/backends
 %{_datadir}/aqbanking/backends/aqhbci
 
 %files backend-aqhbci-devel
