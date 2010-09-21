@@ -44,9 +44,9 @@ Obsoletes:	aqbanking-frontend-g2banking-static
 Obsoletes:	aqbanking-frontend-kbanking
 Obsoletes:	aqbanking-frontend-kbanking-devel
 Obsoletes:	aqbanking-frontend-kbanking-static
-Obsoletes:	frontend-qbanking
-Obsoletes:	frontend-qbanking-devel
-Obsoletes:	frontend-qbanking-static
+Obsoletes:	aqbanking-frontend-qbanking
+Obsoletes:	aqbanking-frontend-qbanking-devel
+Obsoletes:	aqbanking-frontend-qbanking-static
 Obsoletes:	python-aqbanking
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
