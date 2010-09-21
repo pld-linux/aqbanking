@@ -1,5 +1,6 @@
 #
-# TODO: unpackaged files
+# TODO: - unpackaged files
+#	- version >= 5.0.0 doesn't work properly with some applications (e.g kmymoney2)
 #
 Summary:	A library for online banking functions and financial data import/export
 Summary(pl.UTF-8):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
