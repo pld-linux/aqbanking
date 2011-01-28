@@ -75,7 +75,7 @@ Summary:	Header files for AqBanking library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki AqBanking
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	gwenhywfar-devel >= 3.0.0
+Requires:	gwenhywfar-devel >= 4.0.4
 
 %description devel
 Header files for AqBanking library.
