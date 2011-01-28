@@ -4,19 +4,19 @@
 Summary:	A library for online banking functions and financial data import/export
 Summary(pl.UTF-8):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
 Name:		aqbanking
-Version:	5.0.1
+Version:	5.0.2
 Release:	1
-License:	GPL v2
+License:	GPL v2+
 Group:		Libraries
 # http://www2.aquamaniac.de/sites/download/packages.php
 Source0:	%{name}-%{version}.tar.gz
-# Source0-md5:	dc7dd799a4a50313b5f11b9a0861b72b
+# Source0-md5:	1e1292550f97280add609249fab0ab94
 URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	gmp-devel
-BuildRequires:	gwenhywfar-devel >= 4.0.0
+BuildRequires:	gwenhywfar-devel >= 4.0.4
 BuildRequires:	ktoblzcheck-devel >= 1.10
 BuildRequires:	libofx-devel >= 0.8.0
 BuildRequires:	libtool >= 2:1.5
@@ -63,12 +63,12 @@ format), SWIFT (MT940 and MT942).
 %description -l pl.UTF-8
 Celem projektu AqBanking jest dostarczenie warstwy pośredniej między
 programem a różnymi bibliotekami usług bankowych online (np. AqHBCI).
-Pierwszy już obsługiwany backend to AqHBCI - biblioteka implementująca
-klienta niemieckiego protokołu HBCI (Home Baking Computer Interface).
-Ponadto Aqbanking dostarcza różne wtyczki upraszczające importowanie i
-eksportowanie danych finansowych. Aktualnie istnieją wtyczki do
-importu następujących formatów: DTAUS (niemiecki format finansowy),
-SWIFT (MT940 oraz MT942).
+Pierwszy, już obsługiwany backend to AqHBCI - biblioteka
+implementująca klienta niemieckiego protokołu HBCI (Home Baking
+Computer Interface). Ponadto Aqbanking dostarcza różne wtyczki
+upraszczające importowanie i eksportowanie danych finansowych.
+Aktualnie istnieją wtyczki do importu następujących formatów: DTAUS
+(niemiecki format finansowy), SWIFT (MT940 oraz MT942).
 
 %package devel
 Summary:	Header files for AqBanking library
@@ -230,10 +230,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install -j1 \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/aqbanking/plugins/*/*/*.{la,a}
-rm -f $RPM_BUILD_ROOT%{_libdir}/aqbanking/plugins/*/frontends/qbanking/cfgmodules/*.{la,a}
-rm -f $RPM_BUILD_ROOT%{_libdir}/gwenhywfar/plugins/*/*/*.{la,a}
-rm -f $RPM_BUILD_ROOT%{py_sitescriptdir}/aqbanking/*.py
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/aqbanking/plugins/*/*/*.{la,a}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/gwenhywfar/plugins/*/*/*.{la,a}
 
 %if %{with yellownet}
 # soname is libaqyellownet.so.0
