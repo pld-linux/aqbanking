@@ -5,7 +5,7 @@ Summary:	A library for online banking functions and financial data import/export
 Summary(pl.UTF-8):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
 Name:		aqbanking
 Version:	5.0.4
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Libraries
 # http://www2.aquamaniac.de/sites/download/packages.php
@@ -203,6 +203,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gwenhywfar/plugins/*/dbio/*.xml
 %dir %{_datadir}/aqbanking
 %dir %{_datadir}/aqbanking/backends
+%dir %{_datadir}/aqbanking/aqbanking
 %{_datadir}/aqbanking/aqbanking/typemaker2
 %{_datadir}/aqbanking/bankinfo
 %{_datadir}/aqbanking/dialogs
