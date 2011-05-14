@@ -95,6 +95,44 @@ Static AqBanking libraries.
 %description static -l pl.UTF-8
 Statyczne biblioteki AqBanking.
 
+%package c++
+Summary:	C++ interface for AqBanking library
+Summary(pl.UTF-8):	Interfejs C++ do biblioteki AqBanking
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description c++
+C++ interface for AqBanking library.
+
+%description c++ -l pl.UTF-8
+Interfejs C++ do biblioteki AqBanking.
+
+%package c++-devel
+Summary:	Header files for aqbankingpp library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki aqbankingpp
+Group:		Development/Libraries
+Requires:	%{name}-c++ = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	libstdc++-devel
+
+%description c++-devel
+Header files for aqbankingpp library.
+
+%description c++-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki aqbankingpp.
+
+%package c++-static
+Summary:	Static aqbankingpp library
+Summary(pl.UTF-8):	Statyczna biblioteka aqbankingpp
+Group:		Development/Libraries
+Requires:	%{name}-c++-devel = %{version}-%{release}
+
+%description c++-static
+Static aqbankingpp library.
+
+%description c++-static -l pl.UTF-8
+Statyczna biblioteka aqbankingpp.
+
 %package backend-aqhbci
 Summary:	AqHBCI backend for AqBanking library
 Summary(pl.UTF-8):	Backend AqHBCI dla biblioteki AqBanking
@@ -174,6 +212,9 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
+%post	c++ -p /sbin/ldconfig
+%postun	c++ -p /sbin/ldconfig
+
 %post	backend-aqhbci -p /sbin/ldconfig
 %postun	backend-aqhbci -p /sbin/ldconfig
 
@@ -214,13 +255,30 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/aqbanking-config
 %attr(755,root,root) %{_libdir}/libaqbanking.so
-%{_includedir}/aqbanking5
+%dir %{_includedir}/aqbanking5
+%{_includedir}/aqbanking5/aqbanking
+%{_includedir}/aqbanking5/aqhbci
+%{_includedir}/aqbanking5/aqofxconnect
 %{_aclocaldir}/aqbanking.m4
 %{_pkgconfigdir}/aqbanking.pc
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libaqbanking.a
+
+%files c++
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libaqbankingpp.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libaqbankingpp.so.0
+
+%files c++-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libaqbankingpp.so
+%{_includedir}/aqbanking5/aqbankingpp
+
+%files c++-static
+%defattr(644,root,root,755)
+%{_libdir}/libaqbankingpp.a
 
 %files backend-aqhbci
 %defattr(644,root,root,755)
