@@ -1,6 +1,3 @@
-#
-# TODO: - unpackaged files
-#
 Summary:	A library for online banking functions and financial data import/export
 Summary(pl.UTF-8):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
 Name:		aqbanking
@@ -18,11 +15,11 @@ BuildRequires:	gettext-devel
 BuildRequires:	gmp-devel
 BuildRequires:	gwenhywfar-devel >= 4.0.4
 BuildRequires:	ktoblzcheck-devel >= 1.10
-BuildRequires:	libofx-devel >= 0.8.0
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pkgconfig
-BuildRequires:	qt-devel >= 1:3.0
 BuildRequires:	which
+Requires:	gwenhywfar >= 4.0.4
+Requires:	ktoblzcheck >= 1.10
 Obsoletes:	aqbanking-backend-aqdtaus
 Obsoletes:	aqbanking-backend-aqdtaus-devel
 Obsoletes:	aqbanking-backend-aqdtaus-static
@@ -175,6 +172,19 @@ AqOFXConnect backend for AqBanking library.
 %description backend-aqofxconnect -l pl.UTF-8
 Backend AqOFXConnect dla biblioteki AqBanking.
 
+%package backend-aqpaypal
+Summary:	AqPayPal backend for AqBanking library
+Summary(pl.UTF-8):	Backend AqPayPal dla biblioteki AqBanking
+License:	GPL v2+ when used in particular applications
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description backend-aqpaypal
+AqPayPal backend for AqBanking library.
+
+%description backend-aqpaypal -l pl.UTF-8
+Backend AqPayPal dla biblioteki AqBanking.
+
 %prep
 %setup -q
 
@@ -185,11 +195,8 @@ Backend AqOFXConnect dla biblioteki AqBanking.
 %{__autoheader}
 %{__automake}
 %configure \
-	--with-qt3-libs=%{_libdir} \
-	--enable-libofx \
 	--enable-static \
-	--with-backends="aqhbci aqofxconnect aqnone" \
-	--with-frontends="qbanking"
+	--with-backends="aqhbci aqnone aqofxconnect aqpaypal"
 
 %{__make} -j1
 
@@ -202,7 +209,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/aqbanking/plugins/*/*/*.{la,a} \
 	$RPM_BUILD_ROOT%{_libdir}/gwenhywfar/plugins/*/*/*.{la,a} \
 	$RPM_BUILD_ROOT%{_libdir}/*.la \
-	$RPM_BUILD_ROOT%{_libdir}/libaq{hbci,none,ofxconnect}.{a,so}
+	$RPM_BUILD_ROOT%{_libdir}/libaq{hbci,none,ofxconnect,paypal}.{a,so}
 
 %find_lang %{name}
 
@@ -223,6 +230,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	backend-aqofxconnect -p /sbin/ldconfig
 %postun	backend-aqofxconnect -p /sbin/ldconfig
+
+%post	backend-aqpaypal -p /sbin/ldconfig
+%postun	backend-aqpaypal -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -259,6 +269,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/aqbanking5/aqbanking
 %{_includedir}/aqbanking5/aqhbci
 %{_includedir}/aqbanking5/aqofxconnect
+%{_includedir}/aqpaypal
 %{_aclocaldir}/aqbanking.m4
 %{_pkgconfigdir}/aqbanking.pc
 
@@ -286,7 +297,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/hbcixml3
 %attr(755,root,root) %{_libdir}/libaqhbci.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaqhbci.so.19
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqhbci.so*
+%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqhbci.so
 %{_libdir}/aqbanking/plugins/*/providers/aqhbci.xml
 %dir %{_datadir}/aqbanking/backends
 %{_datadir}/aqbanking/backends/aqhbci
@@ -295,13 +306,23 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaqnone.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaqnone.so.33
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqnone.so*
+%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqnone.so
 %{_libdir}/aqbanking/plugins/*/providers/aqnone.xml
 
 %files backend-aqofxconnect
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaqofxconnect.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaqofxconnect.so.7
-%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqofxconnect.so*
+%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqofxconnect.so
 %{_libdir}/aqbanking/plugins/*/providers/aqofxconnect.xml
 %{_datadir}/aqbanking/backends/aqofxconnect
+
+%files backend-aqpaypal
+%defattr(644,root,root,755)
+%doc src/plugins/backends/aqpaypal/COPYING
+%attr(755,root,root) %{_bindir}/aqpaypal-tool
+%attr(755,root,root) %{_libdir}/libaqpaypal.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libaqpaypal.so.0
+%attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqpaypal.so
+%{_libdir}/aqbanking/plugins/*/providers/aqpaypal.xml
+%{_datadir}/aqbanking/backends/aqpaypal
