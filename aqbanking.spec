@@ -1,13 +1,13 @@
 Summary:	A library for online banking functions and financial data import/export
 Summary(pl.UTF-8):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
 Name:		aqbanking
-Version:	5.0.5
+Version:	5.0.14
 Release:	1
 License:	GPL v2+
 Group:		Libraries
 # http://www2.aquamaniac.de/sites/download/packages.php
 Source0:	%{name}-%{version}.tar.gz
-# Source0-md5:	b50c28887fc9fd2fc9a4d9fc996497e6
+# Source0-md5:	c489bc8a8621d77653f09cae1ceb06e8
 URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake
@@ -296,7 +296,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/aqhbci-tool4
 %attr(755,root,root) %{_bindir}/hbcixml3
 %attr(755,root,root) %{_libdir}/libaqhbci.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaqhbci.so.19
+%attr(755,root,root) %ghost %{_libdir}/libaqhbci.so.20
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqhbci.so
 %{_libdir}/aqbanking/plugins/*/providers/aqhbci.xml
 %dir %{_datadir}/aqbanking/backends
