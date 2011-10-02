@@ -1,24 +1,25 @@
+%define	gwenhywfar_ver	4.3.0
 Summary:	A library for online banking functions and financial data import/export
 Summary(pl.UTF-8):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
 Name:		aqbanking
-Version:	5.0.14
-Release:	2
+Version:	5.0.16
+Release:	1
 License:	GPL v2+
 Group:		Libraries
 # http://www2.aquamaniac.de/sites/download/packages.php
-Source0:	%{name}-%{version}.tar.gz
-# Source0-md5:	c489bc8a8621d77653f09cae1ceb06e8
+Source0:	http://www2.aquamaniac.de/sites/download/download.php?package=03&release=87&file=01&dummy=%{name}-%{version}.tar.gz#/%{name}-%{version}.tar.gz
+# Source0-md5:	30549bc6a95f5814b2efe433edeb6f85
 URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	gmp-devel
-BuildRequires:	gwenhywfar-devel >= 4.0.4
+BuildRequires:	gwenhywfar-devel >= %{gwenhywfar_ver}
 BuildRequires:	ktoblzcheck-devel >= 1.10
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pkgconfig
 BuildRequires:	which
-Requires:	gwenhywfar >= 4.0.4
+Requires:	gwenhywfar >= %{gwenhywfar_ver}
 Requires:	ktoblzcheck >= 1.10
 Obsoletes:	aqbanking-backend-aqdtaus
 Obsoletes:	aqbanking-backend-aqdtaus-devel
@@ -72,7 +73,7 @@ Summary:	Header files for AqBanking library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki AqBanking
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	gwenhywfar-devel >= 4.0.4
+Requires:	gwenhywfar-devel >= %{gwenhywfar_ver}
 
 %description devel
 Header files for AqBanking library.
