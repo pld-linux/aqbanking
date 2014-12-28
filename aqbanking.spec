@@ -12,7 +12,7 @@ Source0:	http://www2.aquamaniac.de/sites/download/download.php?package=03&releas
 URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	gmp-devel
 BuildRequires:	gwenhywfar-devel >= %{gwenhywfar_ver}
 BuildRequires:	ktoblzcheck-devel >= 1.10
