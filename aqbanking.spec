@@ -2,13 +2,13 @@
 Summary:	A library for online banking functions and financial data import/export
 Summary(pl.UTF-8):	Biblioteka do funkcji bankowych online oraz importu/eksportu danych finansowych
 Name:		aqbanking
-Version:	5.0.16
+Version:	5.0.25
 Release:	1
 License:	GPL v2+
 Group:		Libraries
 # http://www2.aquamaniac.de/sites/download/packages.php
-Source0:	http://www2.aquamaniac.de/sites/download/download.php?package=03&release=87&file=01&dummy=%{name}-%{version}.tar.gz#/%{name}-%{version}.tar.gz
-# Source0-md5:	30549bc6a95f5814b2efe433edeb6f85
+Source0:	http://www2.aquamaniac.de/sites/download/download.php?package=03&release=95&file=01&dummy=%{name}-%{version}.tar.gz?/%{name}-%{version}.tar.gz
+# Source0-md5:	b238639962128ce25db81870f65173d9
 URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake
@@ -240,7 +240,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc ChangeLog README TODO
 %attr(755,root,root) %{_bindir}/aqbanking-cli
 %attr(755,root,root) %{_libdir}/libaqbanking.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaqbanking.so.33
+%attr(755,root,root) %ghost %{_libdir}/libaqbanking.so.34
 %dir %{_libdir}/aqbanking
 %dir %{_libdir}/aqbanking/plugins
 %dir %{_libdir}/aqbanking/plugins/*
@@ -306,7 +306,7 @@ rm -rf $RPM_BUILD_ROOT
 %files backend-aqnone
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaqnone.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaqnone.so.33
+%attr(755,root,root) %ghost %{_libdir}/libaqnone.so.34
 %attr(755,root,root) %{_libdir}/aqbanking/plugins/*/providers/aqnone.so
 %{_libdir}/aqbanking/plugins/*/providers/aqnone.xml
 
